@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday PCR Garu</title>
+    <title>Happy Birthday pcsr Garu</title>
     
     <!-- ========================================== -->
     <!--                  FONTS                     -->
@@ -301,10 +301,11 @@
     <header class="fixed top-3 left-0 w-full z-50 px-4">
         <div class="glass-nav rounded-[1.25rem] p-[5px] flex justify-between items-center max-w-2xl mx-auto transition-all duration-300">
             <div class="flex items-center gap-3 pl-2">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow flex items-center justify-center font-bold text-white text-sm">
-                    PCR
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow flex items-center justify-center font-bold text-white text-sm overflow-hidden">
+                    <img src="https://yt3.googleusercontent.com/ObICO3EVk6Mk-KitHb8ISoKC8hVs-zQiXTle0-Og7DXfFPjW3uyTmvqVWlfeQKczDDMaOK1-rg=s900-c-k-c0x00ffffff-no-rj" alt="PCR Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <span style="display:none; text-transform:uppercase;">pcsr</span>
                 </div>
-                <span class="font-serif font-semibold text-sm tracking-wide text-brand-dark">PCR - Nellore MLC</span>
+                <span class="font-serif font-semibold text-sm tracking-wide text-brand-dark">PCSR - Nellore MLC</span>
             </div>
             
             <!-- Language Toggle -->
@@ -334,15 +335,15 @@
                 <!-- Leader Profile & Signature (Rounded Vertical Rectangle) -->
                 <div class="flex flex-col items-center justify-center mb-6 relative">
                     <div class="w-50 h-100 md:w-100 md:h-100 rounded-3xl border-[5px] border-white shadow-xl overflow-hidden relative bg-brand-dark">
-                        <img src="./templates/PCR photo.png" 
+                        <img src="./templates/pcr photo.jpeg" 
                              onerror="this.src='https://scontent.ftir1-2.fna.fbcdn.net/v/t39.30808-6/643403764_933124175929790_6986846745632727594_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1440&ctp=s1440x1440&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=EzTx3W6a0UgQ7kNvwGqGy_4&_nc_oc=Adp8XxbOfOkX_h88f0cFVdJduZEGlbB0ZuHoA7vCOIIBpjwvWlRBg0_ya-a6dV7HueFE6ZDnxw-JDieuCtlnWUJy&_nc_zt=23&_nc_ht=scontent.ftir1-2.fna&_nc_gid=Zi6TtRoVR0nZqvKwbH3sfA&_nc_ss=7b289&oh=00_Af9xWZgJg0jokUF-OVZ2txVPoqFKp6dBL7G0RIaL1Y5NfQ&oe=6A34B317'"
                              alt="Parvathareddy Chandrasekhar Reddy" 
                              class="w-full h-full object-cover">
                     </div>
                     <!-- Golden Signature -->
-                    <div class="font-signature text-brand-gold text-shadow-glow text-6xl md:text-7xl -mt-8 ml-20 rotate-[-6deg] z-10">
-                        PCR
-                    </div>
+                    <!-- <div class="font-signature text-brand-gold text-shadow-glow text-6xl md:text-7xl -mt-8 ml-20 rotate-[-6deg] z-10">
+                        PCSR
+                    </div> -->
                 </div>
 
                 <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto px-4" data-i18n="hero_desc">
@@ -567,8 +568,8 @@
     <!-- Global Footer -->
     <footer class="w-full text-center py-8 px-4 mt-auto z-10">
         <div class="max-w-2xl mx-auto space-y-2">
-            <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday PCR Garu</h4>
-            <p class="text-xs text-slate-500 font-medium">Initiated by <br><span class="text-brand-dark font-semibold">Dileep Kancherla</span></p>
+            <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday PCSR Garu</h4>
+            <p class="text-xs text-slate-500 font-medium">Initiated by <br><span class="text-brand-dark font-semibold">PCSR Talks</span></p>
             <p class="text-xs text-slate-500 font-medium">Developed by <br><span class="text-brand-dark font-semibold">Samrat Kolaparthi</span></p>
             <p class="text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-semibold">&copy; <span id="current-year"></span> All rights reserved.</p>
         </div>
@@ -954,13 +955,13 @@
         }
 
         function saveState() {
-            try { localStorage.setItem('pcr_wishes_state', JSON.stringify({ inputs: state.inputs, lang: currentLang })); } 
+            try { localStorage.setItem('pcsr_wishes_state', JSON.stringify({ inputs: state.inputs, lang: currentLang })); } 
             catch(e) {}
         }
 
         function loadSavedState() {
             try {
-                const saved = localStorage.getItem('pcr_wishes_state');
+                const saved = localStorage.getItem('pcsr_wishes_state');
                 if(saved) {
                     const p = JSON.parse(saved);
                     if(p.inputs) state.inputs = { ...state.inputs, ...p.inputs };
@@ -1177,7 +1178,7 @@
         /** --- SHARE & DOWNLOAD --- */
         function downloadPoster() {
             const link = document.createElement('a');
-            link.download = `PCR_Birthday_Wishes_${Date.now()}.png`;
+            link.download = `pcsr_Birthday_Wishes_${Date.now()}.png`;
             link.href = els.exportCanvas.toDataURL('image/png', 1.0);
             document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
@@ -1195,8 +1196,8 @@
             try {
                 const blob = await createExportBlob();
                 if (!blob) return;
-                const file = new File([blob], `PCR_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
-                const shareData = { title: 'Happy Birthday PCR Garu', text: state.inputs.message, files: [file] };
+                const file = new File([blob], `pcsr_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
+                const shareData = { title: 'Happy Birthday pcsr Garu', text: state.inputs.message, files: [file] };
                 if (navigator.canShare && !navigator.canShare({ files: [file] })) {
                     delete shareData.files;
                 }
@@ -1214,8 +1215,8 @@
                 return;
             }
 
-            const file = new File([blob], `PCR_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
-            const shareData = { title: 'Happy Birthday PCR Garu', text: state.inputs.message, files: [file] };
+            const file = new File([blob], `pcsr_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
+            const shareData = { title: 'Happy Birthday pcsr Garu', text: state.inputs.message, files: [file] };
 
             try {
                 if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
