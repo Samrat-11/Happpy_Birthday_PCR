@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday PCR Garu</title>
+    
+    <!-- ========================================== -->
+    <!--                  FONTS                     -->
+    <!-- ========================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- ========================================== -->
+    <!--            EXTERNAL LIBRARIES              -->
+    <!-- ========================================== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    
+    <!-- ========================================== -->
+    <!--            TAILWIND CONFIG                 -->
+    <!-- ========================================== -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',    // Deep Navy
+                            light: '#ffffff',   // Candy White
+                            gold: '#d4af37',    // Premium Gold
+                            accent: '#1e3a8a'   // Accent Blue
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        signature: ['Great Vibes', 'cursive'],
+                        roboto: ['Roboto', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'floating': '0 10px 40px -10px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ========================================== -->
+    <!--                  CSS                       -->
+    <!-- ========================================== -->
+    <style>
+        :root {
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        /* Strict Layout Reset for Perfect Spacing */
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #ffffff; /* Pure Candy White */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            overscroll-behavior-y: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        main {
+            flex: 1; /* Takes up all available space between header and footer */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding-top: 85px; /* Creates exact space for floating navbar */
+            padding-bottom: 2rem;
+        }
+
+        /* View Transitions (Fixed to stop layout shifting) */
+        .view-section {
+            display: none;
+        }
+        
+        .view-section.active {
+            display: flex;
+            flex-direction: column;
+            flex: 1; /* Allows inner content to vertically center natively */
+            animation: fadeInView 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeInView {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glassmorphism Navbar */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Typography Utilities */
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            /* Standard property for compatibility */
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-shadow-glow {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Canvas Container */
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 125%; /* 4:5 Aspect Ratio */
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: #e2e8f0; 
+        }
+        .canvas-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Form Inputs */
+        .premium-input, .premium-select {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 1rem;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            color: #0f172a;
+            transition: all 0.2s ease;
+        }
+        .premium-input:focus, .premium-select:focus {
+            outline: none;
+            border-color: #0f172a;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        /* Buttons (Navy Blue Only) */
+        .btn-primary {
+            background-color: #0f172a;
+            color: white;
+            border-radius: 999px;
+            padding: 1.125rem 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2);
+        }
+        .btn-primary:active { transform: scale(0.96); }
+        .btn-primary:hover { box-shadow: 0 8px 25px rgba(15, 23, 42, 0.3); }
+
+        .btn-secondary {
+            background-color: white;
+            color: #0f172a;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 999px;
+            padding: 1.125rem 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .btn-secondary:active { transform: scale(0.96); background-color: #f8fafc; }
+
+        /* Language Toggle */
+        .segmented-control {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 999px;
+            padding: 4px;
+            position: relative;
+        }
+        .segmented-control button {
+            flex: 1;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .segmented-control button.active { color: #0f172a; }
+        .segment-highlight {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            width: calc(50% - 4px);
+            background: white;
+            border-radius: 999px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1;
+        }
+
+        /* Color Picker Customization */
+        input[type="color"] {
+            /* Standard appearance for compatibility with non-WebKit browsers */
+            appearance: none;
+            -webkit-appearance: none;
+            border: none;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid #e2e8f0; border-radius: 50%; }
+
+        /* Alignment Toggle */
+        .align-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #64748b;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        .align-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        /* Drag & Drop State */
+        .dragover {
+            background-color: #f1f5f9;
+            border-color: #1e3a8a !important;
+            transform: scale(1.02);
+        }
+
+        /* Cropper Modal */
+        #crop-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #crop-modal.active { transform: translateY(0); }
+        
+        .pb-safe { padding-bottom: calc(2rem + var(--safe-area-inset-bottom)); }
+    </style>
+</head>
+<body class="text-brand-dark antialiased">
+
+    <!-- ========================================== -->
+    <!--                  HTML                      -->
+    <!-- ========================================== -->
+
+    <!-- Floating Top Navigation -->
+    <header class="fixed top-3 left-0 w-full z-50 px-4">
+        <div class="glass-nav rounded-[1.25rem] p-[5px] flex justify-between items-center max-w-2xl mx-auto transition-all duration-300">
+            <div class="flex items-center gap-3 pl-2">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow flex items-center justify-center font-bold text-white text-sm">
+                    PCR
+                </div>
+                <span class="font-serif font-semibold text-sm tracking-wide text-brand-dark">PCR - Nellore MLC</span>
+            </div>
+            
+            <!-- Language Toggle -->
+            <div class="segmented-control w-28 shadow-inner">
+                <div class="segment-highlight" id="lang-highlight"></div>
+                <button onclick="setLanguage('en')" id="btn-lang-en" class="active">EN</button>
+                <button onclick="setLanguage('te')" id="btn-lang-te">TE</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="px-4 md:px-6 max-w-2xl mx-auto relative z-10">
+
+        <!-- ================= 1. VIEW: LANDING ================= -->
+        <section id="view-landing" class="view-section active">
+            <!-- This wrapper natively centers the content vertically -->
+            <div class="flex-1 flex flex-col justify-center items-center text-center w-full">
+
+                <h1 class="text-3xl md:text-4xl font-serif font-bold leading-tight mb-2 mt-4" data-i18n="hero_title">
+                    Happy Birthday
+                </h1>
+                <h2 class="text-xl md:text-2xl font-serif font-bold italic text-brand-dark mb-6" data-i18n="hero_subtitle">
+                    Parvathareddy Chandrasekhar Reddy Garu
+                </h2>
+                
+                <!-- Leader Profile & Signature (Rounded Vertical Rectangle) -->
+                <div class="flex flex-col items-center justify-center mb-6 relative">
+                    <div class="w-50 h-100 md:w-100 md:h-100 rounded-3xl border-[5px] border-white shadow-xl overflow-hidden relative bg-brand-dark">
+                        <img src="templates/PCR photo.png" 
+                             onerror="this.src='https://scontent.ftir1-2.fna.fbcdn.net/v/t39.30808-6/643403764_933124175929790_6986846745632727594_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1440&ctp=s1440x1440&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=EzTx3W6a0UgQ7kNvwGqGy_4&_nc_oc=Adp8XxbOfOkX_h88f0cFVdJduZEGlbB0ZuHoA7vCOIIBpjwvWlRBg0_ya-a6dV7HueFE6ZDnxw-JDieuCtlnWUJy&_nc_zt=23&_nc_ht=scontent.ftir1-2.fna&_nc_gid=Zi6TtRoVR0nZqvKwbH3sfA&_nc_ss=7b289&oh=00_Af9xWZgJg0jokUF-OVZ2txVPoqFKp6dBL7G0RIaL1Y5NfQ&oe=6A34B317'"
+                             alt="Parvathareddy Chandrasekhar Reddy" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <!-- Golden Signature -->
+                    <div class="font-signature text-brand-gold text-shadow-glow text-6xl md:text-7xl -mt-8 ml-20 rotate-[-6deg] z-10">
+                        PCR
+                    </div>
+                </div>
+
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto px-4" data-i18n="hero_desc">
+                    Celebrate our leader's birthday by creating a personalized wishes poster.
+                </p>
+                
+                <div class="w-full max-w-xs mx-auto mb-4">
+                    <button onclick="navigate('view-templates')" class="btn-primary">
+                        <span data-i18n="btn_create_wishes">Create Wishes</span>
+                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 2. VIEW: TEMPLATES ================= -->
+        <section id="view-templates" class="view-section">
+            <!-- Consistent In-Flow Back Button -->
+            <div class="w-full mb-4">
+                <button onclick="goBack('view-landing')" class="w-10 h-10 bg-white border border-slate-200 rounded-full shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all active:scale-95 text-brand-dark">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 flex flex-col">
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h2 class="text-2xl font-serif font-bold" data-i18n="choose_template">Choose a Template</h2>
+                        <p class="text-sm text-slate-500 mt-1" data-i18n="choose_template_desc">Select a design to start personalizing.</p>
+                    </div>
+                    <span class="text-xs font-bold bg-brand-dark text-white px-3 py-1 rounded-full">2 Options</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4" id="template-list">
+                    <!-- Templates dynamically injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. VIEW: UPLOAD PHOTO ================= -->
+        <section id="view-upload" class="view-section">
+            <div class="w-full mb-4">
+                <button onclick="goBack('view-templates')" class="w-10 h-10 bg-white border border-slate-200 rounded-full shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all active:scale-95 text-brand-dark">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-center">
+                <div class="text-center mb-8">
+                    <p class="text-xs font-semibold tracking-widest text-brand-gold mb-2 uppercase" data-i18n="step_1">Step 1 of 2</p>
+                    <h2 class="text-3xl font-serif font-bold mb-3" data-i18n="upload_title">Upload Your Photo</h2>
+                    <p class="text-slate-600 text-sm max-w-xs mx-auto" data-i18n="upload_desc">Choose a clear portrait photo from your gallery or take a new one.</p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-6 shadow-soft border border-slate-100 w-full max-w-sm mx-auto">
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Gallery Option -->
+                        <label id="drop-zone-gallery" class="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-2xl p-6 cursor-pointer hover:bg-slate-50 transition-all group relative">
+                            <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fa-regular fa-image text-xl text-brand-dark"></i>
+                            </div>
+                            <span class="font-bold text-brand-dark text-sm mb-1" data-i18n="btn_gallery">Gallery</span>
+                            <input type="file" id="image-input-gallery" class="hidden" accept="image/jpeg, image/png, image/webp">
+                        </label>
+
+                        <!-- Camera Option -->
+                        <label class="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-2xl p-6 cursor-pointer hover:bg-slate-50 transition-all group">
+                            <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-camera text-xl text-brand-dark"></i>
+                            </div>
+                            <span class="font-bold text-brand-dark text-sm mb-1" data-i18n="btn_camera">Camera</span>
+                            <input type="file" id="image-input-camera" class="hidden" accept="image/*" capture="environment">
+                        </label>
+                    </div>
+                    <p class="text-center text-xs text-slate-400 mt-5 hidden md:block">JPG or PNG (Drag & Drop supported)</p>
+                    <p class="text-center text-xs text-slate-400 mt-5 md:hidden">JPG or PNG</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 4. VIEW: CUSTOMIZE ================= -->
+        <section id="view-customize" class="view-section">
+            <div class="w-full mb-4">
+                <button onclick="goBack('view-upload')" class="w-10 h-10 bg-white border border-slate-200 rounded-full shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all active:scale-95 text-brand-dark">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 flex flex-col">
+                <p class="text-xs font-semibold tracking-widest text-brand-gold mb-2 uppercase" data-i18n="step_2">Step 2 of 2</p>
+                <h2 class="text-3xl font-serif font-bold mb-6" data-i18n="personalize_title">Add Your Details</h2>
+
+                <!-- Live Preview Mini Map -->
+                <div class="mb-8 flex justify-center">
+                    <div class="w-1/2 max-w-[200px]">
+                        <div class="canvas-container shadow-floating border-[4px] border-white">
+                            <canvas id="preview-canvas"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-slate-400 mt-3 font-medium"><i class="fa-solid fa-eye mr-1"></i> <span data-i18n="live_preview">Live Preview</span></p>
+                    </div>
+                </div>
+
+                <!-- Form Controls -->
+                <div class="bg-white rounded-3xl p-5 md:p-6 shadow-soft border border-slate-100 space-y-5">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_name">Your Name</label>
+                            <input type="text" id="input-name" class="premium-input" placeholder="e.g. Rahul Kumar">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_place">Your Place / Constituency</label>
+                            <input type="text" id="input-place" class="premium-input" placeholder="e.g. Hyderabad">
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-xs font-bold tracking-widest text-brand-dark uppercase" data-i18n="label_message">Custom Message</label>
+                                <span class="text-xs text-slate-400" id="char-count">0/80</span>
+                            </div>
+                            <textarea id="input-message" class="premium-input resize-none h-20" maxlength="80"></textarea>
+                        </div>
+
+                        <!-- Typography Settings -->
+                        <div>
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_font">Font Style</label>
+                            <div class="relative">
+                                <select id="input-font" class="premium-select appearance-none">
+                                    <option value="Inter">Modern (Inter)</option>
+                                    <option value="'Playfair Display'">Classic (Playfair)</option>
+                                    <option value="Roboto">Clean (Roboto)</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_color">Text Color</label>
+                            <div class="flex items-center gap-3 bg-[#f8fafc] p-2 rounded-2xl border border-slate-100">
+                                <input type="color" id="input-color" value="#0f172a">
+                                <span class="text-sm font-medium text-brand-dark uppercase" id="color-hex">#0F172A</span>
+                            </div>
+                        </div>
+
+                        <!-- Alignment & Sizing -->
+                        <div>
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase">Text Alignment</label>
+                            <div class="flex gap-2">
+                                <button onclick="setAlignment('left')" id="align-left" class="align-btn flex-1"><i class="fa-solid fa-align-left"></i></button>
+                                <button onclick="setAlignment('center')" id="align-center" class="align-btn flex-1 active"><i class="fa-solid fa-align-center"></i></button>
+                                <button onclick="setAlignment('right')" id="align-right" class="align-btn flex-1"><i class="fa-solid fa-align-right"></i></button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase">Text Size</label>
+                            <div class="flex items-center gap-3 bg-[#f8fafc] p-3.5 rounded-2xl border border-slate-100 h-[52px]">
+                                <i class="fa-solid fa-font text-xs text-slate-400"></i>
+                                <input type="range" id="input-scale" min="0.7" max="1.4" step="0.05" value="1" class="w-full accent-brand-dark cursor-pointer">
+                                <i class="fa-solid fa-font text-base text-slate-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <button onclick="generateFinalImage()" class="btn-primary" id="btn-apply">
+                        <span data-i18n="btn_apply_generate">Apply & Generate Poster</span>
+                        <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 5. VIEW: RESULT ================= -->
+        <section id="view-result" class="view-section">
+            <div class="flex-1 flex flex-col">
+                <div class="text-center mb-6 pt-4">
+                    <div class="w-16 h-16 bg-[#f8fafc] border border-slate-100 text-[#0f172a] rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <i class="fa-solid fa-check text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-serif font-bold mb-2" data-i18n="ready_title">Success!</h2>
+                    <p class="text-slate-600" data-i18n="ready_desc">Your personalized poster is ready to share.</p>
+                </div>
+                
+                <div class="bg-white rounded-3xl p-3 shadow-soft mb-8 border border-slate-100">
+                    <img id="final-result-img" src="" alt="Final Poster" class="w-full rounded-[1.25rem] shadow-sm">
+                </div>
+
+                <div class="space-y-3 mb-8">
+                    <button onclick="downloadPoster()" class="btn-primary">
+                        <i class="fa-solid fa-download mr-2"></i>
+                        <span data-i18n="share_download">Download Image</span>
+                    </button>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="shareWhatsApp()" class="btn-secondary !bg-white !text-[#25D366] !border-[#25D366] hover:!bg-[#25D366] hover:!text-white">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>WhatsApp</span>
+                        </button>
+                        <button onclick="nativeShare()" id="btn-native-share" class="btn-secondary">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <span data-i18n="share_native">More</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-8 border-t border-slate-200 pt-6">
+                    <button onclick="goHome()" class="text-slate-500 font-semibold text-sm hover:text-brand-dark flex items-center gap-2">
+                        <i class="fa-solid fa-house"></i> <span data-i18n="btn_home">Home</span>
+                    </button>
+                    <button onclick="goBack('view-templates')" class="text-brand-gold font-semibold text-sm hover:text-yellow-600 flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> <span data-i18n="btn_create_another">Create Another</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="w-full text-center py-8 px-4 mt-auto z-10">
+        <div class="max-w-2xl mx-auto space-y-2">
+            <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday PCR Garu</h4>
+            <p class="text-xs text-slate-500 font-medium">Initiated by <br><span class="text-brand-dark font-semibold">Dileep Kancherla</span></p>
+            <p class="text-xs text-slate-500 font-medium">Developed by <br><span class="text-brand-dark font-semibold">Samrat Kolaparthi</span></p>
+            <p class="text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-semibold">&copy; <span id="current-year"></span> All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ================= MODAL: CROPPER ================= -->
+    <div id="crop-modal">
+        <div class="glass-dark px-4 py-4 flex justify-between items-center text-white z-10 sticky top-0">
+            <h3 class="font-serif font-bold text-lg" data-i18n="modal_adjust">Adjust Photo</h3>
+            <button onclick="closeCropModal()" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all active:scale-95">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <div class="flex-grow relative bg-black flex items-center justify-center overflow-hidden h-full">
+            <img id="cropper-image" src="" alt="To Crop" class="max-w-full max-h-full block">
+        </div>
+
+        <div class="glass-dark p-6 pb-safe z-10">
+            <div class="flex justify-between items-center max-w-md mx-auto w-full gap-4">
+                <div class="flex gap-2">
+                    <button onclick="cropper.rotate(-90)" class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all active:scale-95">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+                <div class="flex gap-3 w-full justify-end">
+                    <button onclick="closeCropModal()" class="px-5 py-3 rounded-full text-white/80 font-medium hover:bg-white/10 transition" data-i18n="btn_cancel">Cancel</button>
+                    <button onclick="applyCrop()" class="px-6 py-3 rounded-full bg-brand-gold text-white font-bold hover:bg-yellow-600 transition shadow-lg active:scale-95" data-i18n="btn_apply_crop">Crop & Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden High-Res Canvas -->
+    <canvas id="export-canvas" style="display: none;"></canvas>
+
+    <!-- ========================================== -->
+    <!--               JAVASCRIPT                   -->
+    <!-- ========================================== -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        /** --- LANGUAGE DICTIONARY --- */
+        const i18n = {
+            en: {
+                hero_title: "Happy Birthday",
+                hero_subtitle: "Parvathareddy Chandrasekhar Reddy Garu",
+                hero_desc: "Celebrate our leader's birthday by creating a personalized wishes poster.",
+                btn_create_wishes: "Create Wishes",
+                choose_template: "Choose a Template",
+                choose_template_desc: "Select a design to start personalizing.",
+                step_1: "Step 1 of 2",
+                upload_title: "Upload Your Photo",
+                upload_desc: "Choose a clear portrait photo from your gallery or take a new one.",
+                btn_gallery: "Gallery",
+                btn_camera: "Camera",
+                step_2: "Step 2 of 2",
+                personalize_title: "Add Your Details",
+                live_preview: "Live Preview",
+                label_name: "Your Name",
+                label_place: "Your Place / Constituency",
+                label_message: "Custom Message",
+                label_font: "Font Style",
+                label_color: "Text Color",
+                btn_apply_generate: "Apply & Generate Poster",
+                ready_title: "Success!",
+                ready_desc: "Your personalized poster is ready to share.",
+                share_download: "Download Image",
+                share_native: "More",
+                btn_home: "Home",
+                btn_create_another: "Create Another",
+                modal_adjust: "Adjust Photo",
+                btn_cancel: "Cancel",
+                btn_apply_crop: "Crop & Apply",
+                default_msg: "Wishing you great health and success!"
+            },
+            te: {
+                hero_title: "జన్మదిన శుభాకాంక్షలు",
+                hero_subtitle: "పర్వతరెడ్డి చంద్రశేఖర్ రెడ్డి గారు",
+                hero_desc: "మా నాయకుడి జన్మదినాన్ని పురస్కరించుకుని వ్యక్తిగత శుభాకాంక్షల పోస్టర్‌ను సృష్టించండి.",
+                btn_create_wishes: "శుభాకాంక్షలు సృష్టించండి",
+                choose_template: "టెంప్లేట్‌ను ఎంచుకోండి",
+                choose_template_desc: "డిజైన్‌ను ఎంచుకుని ప్రారంభించండి.",
+                step_1: "దశ 1/2",
+                upload_title: "మీ ఫోటోను అప్‌లోడ్ చేయండి",
+                upload_desc: "గ్యాలరీ నుండి లేదా కెమెరా ద్వారా స్పష్టమైన ఫోటోను ఎంచుకోండి.",
+                btn_gallery: "గ్యాలరీ",
+                btn_camera: "కెమెరా",
+                step_2: "దశ 2/2",
+                personalize_title: "మీ వివరాలను జోడించండి",
+                live_preview: "లైవ్ ప్రివ్యూ",
+                label_name: "మీ పేరు",
+                label_place: "మీ ఊరు / నియోజకవర్గం",
+                label_message: "సందేశం",
+                label_font: "ఫాంట్ శైలి",
+                label_color: "అక్షరాల రంగు",
+                btn_apply_generate: "పోస్టర్‌ను రూపొందించండి",
+                ready_title: "విజయం!",
+                ready_desc: "మీ పోస్టర్ పంచుకోవడానికి సిద్ధంగా ఉంది.",
+                share_download: "ఇమేజ్ డౌన్‌లోడ్",
+                share_native: "మరిన్ని",
+                btn_home: "హోమ్",
+                btn_create_another: "మరొకటి సృష్టించండి",
+                modal_adjust: "ఫోటోను క్రాప్ చేయండి",
+                btn_cancel: "రద్దు",
+                btn_apply_crop: "క్రాప్ చేయండి",
+                default_msg: "మీకు ఆయురారోగ్యాలు కలగాలని కోరుకుంటున్నాను!"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const btnEn = document.getElementById('btn-lang-en');
+            const btnTe = document.getElementById('btn-lang-te');
+            const highlight = document.getElementById('lang-highlight');
+            
+            if(lang === 'en') {
+                btnEn.classList.add('active'); btnTe.classList.remove('active');
+                highlight.style.transform = 'translateX(0)';
+            } else {
+                btnTe.classList.add('active'); btnEn.classList.remove('active');
+                highlight.style.transform = 'translateX(100%)';
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(i18n[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = i18n[lang][key];
+                    else el.innerHTML = i18n[lang][key];
+                }
+            });
+
+            if(state.inputs.message === i18n[lang === 'en' ? 'te' : 'en'].default_msg || state.inputs.message === "") {
+                state.inputs.message = i18n[lang].default_msg;
+                document.getElementById('input-message').value = state.inputs.message;
+            }
+            saveState();
+            renderPreview();
+        }
+
+        /** --- STATE & ENGINE CONFIG --- */
+        const CANVAS_W = 1080;
+        const CANVAS_H = 1350; // 4:5 ratio
+
+        const state = {
+            currentView: 'view-landing',
+            templateId: 'tpl-1',
+            userImageObj: null,
+            inputs: { name: "", place: "", message: i18n.en.default_msg, font: "Inter", color: "#0f172a", align: "center", scale: 1 },
+            isRendering: false
+        };
+
+        const templates = [
+            {
+                id: `tpl-1`,
+                name: `Light Theme`,
+                src: 'templates/template1.png',
+                width: 1080,   // Dynamic width
+                height: 1080,
+                photoRect: {x: 61.5, y: 520, w: 370, h: 370, cropAspect: 1 }, 
+                textConfig: {
+                    name: { x: CANVAS_W/2, y: 1220, size: 48, weight: 'bold', align: 'center' },
+                    place: { x: CANVAS_W/2, y: 1270, size: 32, weight: '500', align: 'center' },
+                    message: { x: CANVAS_W/2, y: 1320, size: 28, weight: 'normal', align: 'center', maxWidth: 900, lineHeight: 35 }
+                },
+                imgObj: null, loaded: false
+            },
+            {
+                id: `tpl-2`,
+                name: `Dark Theme`,
+                src: 'templates/template2.png',
+                width: 1080,   // Dynamic width
+                height: 1350,
+                photoRect: { x: 100, y: 550, w: 440, h: 440, cropAspect: 1 }, 
+                textConfig: {
+                    name: { x: CANVAS_W/2, y: 1100, size: 48, weight: 'bold', align: 'center' },
+                    place: { x: CANVAS_W/2, y: 1150, size: 32, weight: '500', align: 'center' },
+                    message: { x: CANVAS_W/2, y: 1200, size: 28, weight: 'normal', align: 'center', maxWidth: 900, lineHeight: 35 }
+                },
+                imgObj: null, loaded: false
+            }
+        ];
+
+        const els = {
+            previewCanvas: document.getElementById('preview-canvas'),
+            exportCanvas: document.getElementById('export-canvas'),
+            templateList: document.getElementById('template-list'),
+            imageInputGallery: document.getElementById('image-input-gallery'),
+            imageInputCamera: document.getElementById('image-input-camera'),
+            cropModal: document.getElementById('crop-modal'),
+            cropperImage: document.getElementById('cropper-image'),
+            finalResultImg: document.getElementById('final-result-img'),
+            btnNativeShare: document.getElementById('btn-native-share'),
+            inputColor: document.getElementById('input-color'),
+            colorHex: document.getElementById('color-hex')
+        };
+
+        const ctxPreview = els.previewCanvas.getContext('2d');
+        const ctxExport = els.exportCanvas.getContext('2d');
+        let cropper = null;
+        let previewDebounceTimer;
+
+        /** --- INITIALIZATION --- */
+        async function init() {
+            if (!navigator.share) els.btnNativeShare.style.display = 'none';
+
+            els.exportCanvas.width = CANVAS_W; els.exportCanvas.height = CANVAS_H;
+            els.previewCanvas.width = CANVAS_W; els.previewCanvas.height = CANVAS_H;
+
+            loadSavedState();
+
+            let loadedCount = 0;
+            templates.forEach(tpl => {
+                tpl.imgObj = new Image();
+                tpl.imgObj.onload = () => { tpl.loaded = true; loadedCount++; };
+                tpl.imgObj.src = tpl.src;
+
+                const html = `
+                    <div onclick="selectTemplate('${tpl.id}')" class="bg-white rounded-[1.5rem] overflow-hidden shadow-sm cursor-pointer transform transition duration-200 hover:-translate-y-1 hover:shadow-md border border-slate-200 relative group">
+                        <div class="aspect-[4/5] relative bg-slate-50">
+                            <img src="${tpl.src}" class="w-full h-full object-cover" alt="${tpl.name}" onerror="this.src='https://placehold.co/800x1000/f8fafc/94a3b8?text=Template'">
+                        </div>
+                        <div class="p-3 text-center bg-white border-t border-slate-100 flex justify-between items-center px-4">
+                            <h3 class="font-serif font-bold text-sm text-brand-dark">${tpl.name}</h3>
+                            <i class="fa-solid fa-arrow-right text-brand-gold text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                    </div>
+                `;
+                els.templateList.insertAdjacentHTML('beforeend', html);
+            });
+
+            // Bind Form Inputs
+            ['name', 'place', 'message', 'font', 'color', 'scale'].forEach(key => {
+                const input = document.getElementById(`input-${key}`);
+                if(input) {
+                    input.value = state.inputs[key];
+                    if(key === 'color') els.colorHex.textContent = state.inputs[key].toUpperCase();
+                    input.addEventListener('input', (e) => {
+                        state.inputs[key] = key === 'scale' ? parseFloat(e.target.value) : e.target.value;
+                        if(key === 'color') els.colorHex.textContent = e.target.value.toUpperCase();
+                        if(key === 'message') document.getElementById('char-count').textContent = `${e.target.value.length}/80`;
+                        
+                        saveState();
+                        clearTimeout(previewDebounceTimer);
+                        previewDebounceTimer = setTimeout(renderPreview, 50);
+                    });
+                }
+            });
+            
+            document.getElementById('char-count').textContent = `${state.inputs.message.length}/80`;
+            setAlignment(state.inputs.align);
+        }
+
+        // Drag & Drop Setup
+        const dropZone = document.getElementById('drop-zone-gallery');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }, false));
+        ['dragenter', 'dragover'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.add('dragover'), false));
+        ['dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.remove('dragover'), false));
+        dropZone.addEventListener('drop', e => { if(e.dataTransfer.files.length) handleFileSelect({target: {files: e.dataTransfer.files}}); }, false);
+
+        // Alignment & State Control
+        function setAlignment(align) {
+            state.inputs.align = align;
+            ['left', 'center', 'right'].forEach(a => document.getElementById(`align-${a}`).classList.remove('active'));
+            document.getElementById(`align-${align}`).classList.add('active');
+            saveState();
+            renderPreview();
+        }
+
+        function saveState() {
+            try { localStorage.setItem('pcr_wishes_state', JSON.stringify({ inputs: state.inputs, lang: currentLang })); } 
+            catch(e) {}
+        }
+
+        function loadSavedState() {
+            try {
+                const saved = localStorage.getItem('pcr_wishes_state');
+                if(saved) {
+                    const p = JSON.parse(saved);
+                    if(p.inputs) state.inputs = { ...state.inputs, ...p.inputs };
+                    if(p.lang) setLanguage(p.lang);
+                }
+            } catch(e) {}
+        }
+
+        /** --- NAVIGATION --- */
+        function navigate(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            state.currentView = viewId;
+        }
+
+        function goBack(viewId) { navigate(viewId); }
+        function goHome() { 
+            state.userImageObj = null; 
+            els.imageInputGallery.value = '';
+            els.imageInputCamera.value = '';
+            navigate('view-landing'); 
+        }
+
+        function selectTemplate(id) {
+            state.templateId = id;
+            navigate('view-upload');
+        }
+
+        /** --- CROPPER LOGIC --- */
+        function handleFileSelect(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    els.cropModal.classList.add('active'); // Show modal immediately
+                    
+                    // CRITICAL FIX: Wait for image to load into DOM before initializing Cropper
+                    els.cropperImage.onload = function() {
+                        // Small timeout to allow the CSS modal transition to complete
+                        // This ensures Cropper.js calculates the screen/container dimensions perfectly
+                        setTimeout(() => {
+                            if (cropper) cropper.destroy();
+                            
+                            const tpl = templates.find(t => t.id === state.templateId) || templates[0];
+                            const aspect = tpl.photoRect ? tpl.photoRect.cropAspect : 1;
+                            
+                            cropper = new Cropper(els.cropperImage, {
+                                aspectRatio: aspect,
+                                viewMode: 1, 
+                                dragMode: 'move', 
+                                autoCropArea: 0.9, 
+                                guides: true, 
+                                background: false,
+                                responsive: true
+                            });
+                        }, 350); 
+                    };
+                    
+                    els.cropperImage.src = event.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        }
+
+        els.imageInputGallery.addEventListener('change', handleFileSelect);
+        els.imageInputCamera.addEventListener('change', handleFileSelect);
+
+        function closeCropModal() {
+            els.cropModal.classList.remove('active');
+            els.imageInputGallery.value = '';
+            els.imageInputCamera.value = '';
+            if(cropper) setTimeout(() => cropper.destroy(), 400);
+        }
+
+        function applyCrop() {
+            if (!cropper) return;
+            const canvas = cropper.getCroppedCanvas({ width: 1000, imageSmoothingEnabled: true, imageSmoothingQuality: 'high' });
+            
+            const img = new Image();
+            img.onload = () => {
+                state.userImageObj = img;
+                closeCropModal();
+                navigate('view-customize');
+                renderPreview();
+            };
+            img.src = canvas.toDataURL('image/jpeg', 0.9);
+        }
+
+        /** --- CANVAS RENDERING ENGINE --- */
+        function renderTemplate(ctx) {
+            const tpl = templates.find(t => t.id === state.templateId);
+            if(!tpl) return;
+
+            ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
+
+            // Layer 1: User Photo
+            if (state.userImageObj) {
+                const r = tpl.photoRect;
+                ctx.save();
+                ctx.beginPath(); ctx.rect(r.x, r.y, r.w, r.h); ctx.clip();
+                ctx.drawImage(state.userImageObj, r.x, r.y, r.w, r.h);
+                ctx.restore();
+            }
+
+            // Layer 2: Template
+            if (tpl.imgObj && tpl.loaded) {
+                ctx.drawImage(tpl.imgObj, 0, 0, CANVAS_W, CANVAS_H);
+            }
+
+            // Layer 3: Dynamic Text
+            const c = tpl.textConfig;
+            const scale = parseFloat(state.inputs.scale) || 1;
+            
+            ctx.fillStyle = state.inputs.color;
+            ctx.textAlign = state.inputs.align;
+
+            function getXPos(defaultCenterX) {
+                if(state.inputs.align === 'center') return defaultCenterX;
+                if(state.inputs.align === 'left') return 90; 
+                if(state.inputs.align === 'right') return CANVAS_W - 90; 
+            }
+
+            if(state.inputs.name) {
+                ctx.font = `${c.name.weight} ${c.name.size * scale}px ${state.inputs.font}`;
+                ctx.fillText(state.inputs.name.toUpperCase(), getXPos(c.name.x), c.name.y);
+            }
+
+            if(state.inputs.place) {
+                ctx.font = `${c.place.weight} ${c.place.size * scale}px ${state.inputs.font}`;
+                ctx.globalAlpha = 0.8;
+                ctx.fillText(state.inputs.place, getXPos(c.place.x), c.place.y + ((c.name.size * scale) - c.name.size));
+                ctx.globalAlpha = 1.0;
+            }
+
+            if(state.inputs.message) {
+                ctx.font = `${c.message.weight} ${c.message.size * scale}px ${state.inputs.font}`;
+                const words = state.inputs.message.split(' ');
+                let line = '', yPos = c.message.y + ((c.name.size * scale) - c.name.size) * 2;
+                for(let n = 0; n < words.length; n++) {
+                    let testLine = line + words[n] + ' ';
+                    if (ctx.measureText(testLine).width > c.message.maxWidth && n > 0) {
+                        ctx.fillText(line.trim(), getXPos(c.message.x), yPos);
+                        line = words[n] + ' ';
+                        yPos += c.message.lineHeight * scale;
+                    } else { line = testLine; }
+                }
+                ctx.fillText(line.trim(), getXPos(c.message.x), yPos);
+            }
+        }
+
+        function renderPreview() {
+            if(state.isRendering) return;
+            renderTemplate(ctxPreview);
+        }
+
+        function generateFinalImage() {
+            state.isRendering = true;
+            const btn = document.getElementById('btn-apply');
+            const origHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                renderTemplate(ctxExport);
+                els.finalResultImg.src = els.exportCanvas.toDataURL('image/png', 1.0);
+                
+                state.isRendering = false;
+                btn.innerHTML = origHTML;
+                btn.disabled = false;
+                navigate('view-result');
+                
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#d4af37', '#0f172a', '#ffffff'] });
+            }, 100);
+        }
+
+        /** --- SHARE & DOWNLOAD --- */
+        function downloadPoster() {
+            const link = document.createElement('a');
+            link.download = `PCR_Birthday_Wishes_${Date.now()}.png`;
+            link.href = els.exportCanvas.toDataURL('image/png', 1.0);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+
+        async function nativeShare() {
+            if (!navigator.share) return;
+            try {
+                const blob = await (await fetch(els.exportCanvas.toDataURL('image/jpeg', 0.9))).blob();
+                const file = new File([blob], 'PCR_Birthday.jpg', { type: 'image/jpeg' });
+                const shareData = { title: 'Happy Birthday PCR Garu', text: state.inputs.message };
+                if (navigator.canShare && navigator.canShare({ files: [file] })) shareData.files = [file];
+                await navigator.share(shareData);
+            } catch (err) {}
+        }
+
+        function shareWhatsApp() {
+            window.open(`https://wa.me/?text=${encodeURIComponent(`Happy Birthday PCR Garu!\n\n${state.inputs.message}`)}`, '_blank');
+            setTimeout(() => {
+                if(confirm("For the best experience, download the image first and attach it to your WhatsApp message. Download now?")) downloadPoster();
+            }, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
