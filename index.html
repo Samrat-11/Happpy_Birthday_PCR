@@ -146,6 +146,13 @@
             object-fit: contain;
         }
 
+        #final-result-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
         /* Form Inputs */
         .premium-input, .premium-select {
             width: 100%;
@@ -327,7 +334,7 @@
                 <!-- Leader Profile & Signature (Rounded Vertical Rectangle) -->
                 <div class="flex flex-col items-center justify-center mb-6 relative">
                     <div class="w-50 h-100 md:w-100 md:h-100 rounded-3xl border-[5px] border-white shadow-xl overflow-hidden relative bg-brand-dark">
-                        <img src="templates/PCR photo.png" 
+                        <img src="./templates/PCR photo.png" 
                              onerror="this.src='https://scontent.ftir1-2.fna.fbcdn.net/v/t39.30808-6/643403764_933124175929790_6986846745632727594_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1440&ctp=s1440x1440&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=EzTx3W6a0UgQ7kNvwGqGy_4&_nc_oc=Adp8XxbOfOkX_h88f0cFVdJduZEGlbB0ZuHoA7vCOIIBpjwvWlRBg0_ya-a6dV7HueFE6ZDnxw-JDieuCtlnWUJy&_nc_zt=23&_nc_ht=scontent.ftir1-2.fna&_nc_gid=Zi6TtRoVR0nZqvKwbH3sfA&_nc_ss=7b289&oh=00_Af9xWZgJg0jokUF-OVZ2txVPoqFKp6dBL7G0RIaL1Y5NfQ&oe=6A34B317'"
                              alt="Parvathareddy Chandrasekhar Reddy" 
                              class="w-full h-full object-cover">
@@ -705,43 +712,44 @@
         }
 
         /** --- STATE & ENGINE CONFIG --- */
-        const CANVAS_W = 1080;
-        const CANVAS_H = 1350; // 4:5 ratio
+        const DEFAULT_CANVAS_WIDTH = 1080;
+        const DEFAULT_CANVAS_HEIGHT = 1350;
 
         const state = {
             currentView: 'view-landing',
             templateId: 'tpl-1',
             userImageObj: null,
             inputs: { name: "", place: "", message: i18n.en.default_msg, font: "Inter", color: "#0f172a", align: "center", scale: 1 },
-            isRendering: false
+            isRendering: false,
+            generatedImageBlob: null
         };
 
         const templates = [
-            {
+                {
                 id: `tpl-1`,
                 name: `Light Theme`,
-                src: 'templates/template1.png',
-                width: 1080,   // Dynamic width
+                src: './templates/template1.png',
+                width: 1080,
                 height: 1080,
-                photoRect: {x: 61.5, y: 520, w: 370, h: 370, cropAspect: 1 }, 
+                photoRect: { x: 61.5, y: 520, w: 370, h: 370, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: CANVAS_W/2, y: 1220, size: 48, weight: 'bold', align: 'center' },
-                    place: { x: CANVAS_W/2, y: 1270, size: 32, weight: '500', align: 'center' },
-                    message: { x: CANVAS_W/2, y: 1320, size: 28, weight: 'normal', align: 'center', maxWidth: 900, lineHeight: 35 }
+                    name: { x: 1233, y: 2209, size: 110, weight: 'bold', align: 'center' },
+                    place: { x: 1233, y: 2328, size: 73, weight: '500', align: 'center' },
+                    message: { x: 1233, y: 2456, size: 64, weight: 'normal', align: 'center', maxWidth: 2053, lineHeight: 80 }
                 },
                 imgObj: null, loaded: false
             },
             {
                 id: `tpl-2`,
                 name: `Dark Theme`,
-                src: 'templates/template2.png',
-                width: 1080,   // Dynamic width
-                height: 1350,
-                photoRect: { x: 100, y: 550, w: 440, h: 440, cropAspect: 1 }, 
+                src: './templates/template2.png',
+                width: 1632,
+                height: 2480,
+                photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: CANVAS_W/2, y: 1100, size: 48, weight: 'bold', align: 'center' },
-                    place: { x: CANVAS_W/2, y: 1150, size: 32, weight: '500', align: 'center' },
-                    message: { x: CANVAS_W/2, y: 1200, size: 28, weight: 'normal', align: 'center', maxWidth: 900, lineHeight: 35 }
+                    name: { x: 816, y: 1661, size: 73, weight: 'bold', align: 'center' },
+                    place: { x: 816, y: 1737, size: 48, weight: '500', align: 'center' },
+                    message: { x: 816, y: 1814, size: 42, weight: 'normal', align: 'center', maxWidth: 1358, lineHeight: 54 }
                 },
                 imgObj: null, loaded: false
             }
@@ -749,6 +757,7 @@
 
         const els = {
             previewCanvas: document.getElementById('preview-canvas'),
+            previewCanvasContainer: document.querySelector('.canvas-container'),
             exportCanvas: document.getElementById('export-canvas'),
             templateList: document.getElementById('template-list'),
             imageInputGallery: document.getElementById('image-input-gallery'),
@@ -766,21 +775,151 @@
         let cropper = null;
         let previewDebounceTimer;
 
-        /** --- INITIALIZATION --- */
+        function getTemplate() {
+            return templates.find(t => t.id === state.templateId) || templates[0];
+        }
+
+        function updateCanvasSizes(tpl) {
+            if (!tpl) return;
+            els.exportCanvas.width = tpl.width;
+            els.exportCanvas.height = tpl.height;
+            els.previewCanvas.width = tpl.width;
+            els.previewCanvas.height = tpl.height;
+            els.previewCanvas.style.width = '100%';
+            els.previewCanvas.style.height = 'auto';
+            els.previewCanvas.style.aspectRatio = `${tpl.width} / ${tpl.height}`;
+            if (els.previewCanvasContainer) {
+                els.previewCanvasContainer.style.paddingBottom = `${(tpl.height / tpl.width) * 100}%`;
+            }
+        }
+
+        function preloadTemplates() {
+            function detectPlaceholderFromImage(img) {
+                try {
+                    const w = img.naturalWidth || img.width;
+                    const h = img.naturalHeight || img.height;
+                    if (!w || !h) return null;
+
+                    const c = document.createElement('canvas');
+                    c.width = w; c.height = h;
+                    const cx = c.getContext('2d');
+                    cx.drawImage(img, 0, 0, w, h);
+
+                    let data;
+                    try { data = cx.getImageData(0, 0, w, h).data; }
+                    catch (e) { return null; }
+
+                    let minX = w, minY = h, maxX = 0, maxY = 0, count = 0;
+                    for (let y = 0; y < h; y++) {
+                        for (let x = 0; x < w; x++) {
+                            const idx = (y * w + x) * 4 + 3; // alpha
+                            const a = data[idx];
+                            if (a <= 16) { // consider mostly transparent
+                                count++;
+                                if (x < minX) minX = x;
+                                if (y < minY) minY = y;
+                                if (x > maxX) maxX = x;
+                                if (y > maxY) maxY = y;
+                            }
+                        }
+                    }
+
+                    if (count === 0) return null;
+
+                    const boxW = maxX - minX + 1;
+                    const boxH = maxY - minY + 1;
+                    const bboxArea = boxW * boxH;
+                    const transparentRatio = count / bboxArea;
+                    const overallRatio = bboxArea / (w * h);
+
+                    // Heuristics: require a reasonable bounding box and density
+                    if (bboxArea < 1000 || overallRatio < 0.0005) return null;
+
+                    let shape = 'rectangle';
+                    const ratio = boxW / boxH;
+                    if (Math.abs(ratio - 1) < 0.3 && transparentRatio > 0.35) shape = 'circle';
+                    else if (transparentRatio > 0.25) shape = (ratio > 0.9 && ratio < 1.1) ? 'square' : 'rectangle';
+
+                    return { x: Math.max(0, minX), y: Math.max(0, minY), w: boxW, h: boxH, shape, cropAspect: boxW / boxH };
+                } catch (err) {
+                    return null;
+                }
+            }
+
+            return Promise.all(templates.map(tpl => new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    tpl.imgObj = img;
+                    tpl.loaded = true;
+
+                    // Automatic placeholder detection (transparent region)
+                    try {
+                        const detected = detectPlaceholderFromImage(img);
+                        if (detected) {
+                            // Scale detection from the image's natural pixel space into the
+                            // template's declared width/height so coordinates map to the canvas.
+                            const imgW = img.naturalWidth || img.width;
+                            const imgH = img.naturalHeight || img.height;
+                            const scaleX = tpl.width / imgW;
+                            const scaleY = tpl.height / imgH;
+
+                            const scaled = {
+                                x: Math.max(0, Math.round(detected.x * scaleX)),
+                                y: Math.max(0, Math.round(detected.y * scaleY)),
+                                w: Math.max(1, Math.round(detected.w * scaleX)),
+                                h: Math.max(1, Math.round(detected.h * scaleY)),
+                                shape: detected.shape,
+                                cropAspect: detected.w / detected.h
+                            };
+
+                            tpl.photoRect = Object.assign({ offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 }, scaled);
+                            console.info('Auto-detected photoRect for', tpl.id, 'detected:', detected, 'scaled:', tpl.photoRect);
+                        }
+                    } catch (e) {
+                        console.warn('Placeholder detection failed for', tpl.src, e);
+                    }
+
+                    resolve(tpl);
+                };
+                img.onerror = () => reject(new Error(`Failed to load ${tpl.src}`));
+                img.src = tpl.src;
+            })));
+        }
+
         async function init() {
             if (!navigator.share) els.btnNativeShare.style.display = 'none';
 
-            els.exportCanvas.width = CANVAS_W; els.exportCanvas.height = CANVAS_H;
-            els.previewCanvas.width = CANVAS_W; els.previewCanvas.height = CANVAS_H;
-
             loadSavedState();
 
-            let loadedCount = 0;
-            templates.forEach(tpl => {
-                tpl.imgObj = new Image();
-                tpl.imgObj.onload = () => { tpl.loaded = true; loadedCount++; };
-                tpl.imgObj.src = tpl.src;
+            try {
+                await preloadTemplates();
+            } catch (err) {
+                console.warn('Template preload failed:', err);
+            }
 
+            updateCanvasSizes(getTemplate());
+
+            ['name', 'place', 'message', 'font', 'color', 'scale'].forEach(key => {
+                const input = document.getElementById(`input-${key}`);
+                if(input) {
+                    input.value = state.inputs[key];
+                    if(key === 'color') els.colorHex.textContent = state.inputs[key].toUpperCase();
+                    input.addEventListener('input', (e) => {
+                        state.inputs[key] = key === 'scale' ? parseFloat(e.target.value) : e.target.value;
+                        if(key === 'color') els.colorHex.textContent = e.target.value.toUpperCase();
+                        if(key === 'message') document.getElementById('char-count').textContent = `${e.target.value.length}/80`;
+                        saveState();
+                        clearTimeout(previewDebounceTimer);
+                        previewDebounceTimer = setTimeout(renderPreview, 50);
+                    });
+                }
+            });
+            
+            document.getElementById('char-count').textContent = `${state.inputs.message.length}/80`;
+            setAlignment(state.inputs.align);
+
+            templates.forEach(tpl => {
                 const html = `
                     <div onclick="selectTemplate('${tpl.id}')" class="bg-white rounded-[1.5rem] overflow-hidden shadow-sm cursor-pointer transform transition duration-200 hover:-translate-y-1 hover:shadow-md border border-slate-200 relative group">
                         <div class="aspect-[4/5] relative bg-slate-50">
@@ -795,26 +934,7 @@
                 els.templateList.insertAdjacentHTML('beforeend', html);
             });
 
-            // Bind Form Inputs
-            ['name', 'place', 'message', 'font', 'color', 'scale'].forEach(key => {
-                const input = document.getElementById(`input-${key}`);
-                if(input) {
-                    input.value = state.inputs[key];
-                    if(key === 'color') els.colorHex.textContent = state.inputs[key].toUpperCase();
-                    input.addEventListener('input', (e) => {
-                        state.inputs[key] = key === 'scale' ? parseFloat(e.target.value) : e.target.value;
-                        if(key === 'color') els.colorHex.textContent = e.target.value.toUpperCase();
-                        if(key === 'message') document.getElementById('char-count').textContent = `${e.target.value.length}/80`;
-                        
-                        saveState();
-                        clearTimeout(previewDebounceTimer);
-                        previewDebounceTimer = setTimeout(renderPreview, 50);
-                    });
-                }
-            });
-            
-            document.getElementById('char-count').textContent = `${state.inputs.message.length}/80`;
-            setAlignment(state.inputs.align);
+            renderPreview();
         }
 
         // Drag & Drop Setup
@@ -867,7 +987,47 @@
 
         function selectTemplate(id) {
             state.templateId = id;
+            const tpl = getTemplate();
+            updateCanvasSizes(tpl);
+            renderPreview();
             navigate('view-upload');
+        }
+
+        function getCoverDrawOptions(img, rect) {
+            const targetW = rect.w;
+            const targetH = rect.h;
+            const zoom = rect.zoom || 1;
+            const imgRatio = img.width / img.height;
+            const rectRatio = targetW / targetH;
+            let scale = rectRatio > imgRatio ? targetW / img.width : targetH / img.height;
+            scale *= zoom;
+            const drawWidth = img.width * scale;
+            const drawHeight = img.height * scale;
+            const offsetX = (targetW - drawWidth) / 2 + (rect.offsetX || 0);
+            const offsetY = (targetH - drawHeight) / 2 + (rect.offsetY || 0);
+            const rotation = (rect.rotation || 0) * Math.PI / 180;
+            return { drawWidth, drawHeight, offsetX, offsetY, rotation };
+        }
+
+        function drawPhotoPlaceholder(ctx, tpl) {
+            if (!state.userImageObj || !tpl.photoRect) return;
+            const r = tpl.photoRect;
+            ctx.save();
+            ctx.beginPath();
+            if (r.shape === 'circle') {
+                ctx.arc(r.x + r.w / 2, r.y + r.h / 2, Math.min(r.w, r.h) / 2, 0, Math.PI * 2);
+            } else {
+                ctx.rect(r.x, r.y, r.w, r.h);
+            }
+            ctx.clip();
+
+            const { drawWidth, drawHeight, offsetX, offsetY, rotation } = getCoverDrawOptions(state.userImageObj, r);
+            const centerX = r.x + r.w / 2;
+            const centerY = r.y + r.h / 2;
+            ctx.translate(centerX, centerY);
+            if (rotation) ctx.rotate(rotation);
+            ctx.drawImage(state.userImageObj, -drawWidth / 2 + offsetX, -drawHeight / 2 + offsetY, drawWidth, drawHeight);
+            ctx.restore();
         }
 
         /** --- CROPPER LOGIC --- */
@@ -917,7 +1077,7 @@
 
         function applyCrop() {
             if (!cropper) return;
-            const canvas = cropper.getCroppedCanvas({ width: 1000, imageSmoothingEnabled: true, imageSmoothingQuality: 'high' });
+            const canvas = cropper.getCroppedCanvas({ width: 1200, imageSmoothingEnabled: true, imageSmoothingQuality: 'high' });
             
             const img = new Image();
             img.onload = () => {
@@ -926,28 +1086,24 @@
                 navigate('view-customize');
                 renderPreview();
             };
-            img.src = canvas.toDataURL('image/jpeg', 0.9);
+            img.src = canvas.toDataURL('image/jpeg', 0.92);
         }
 
         /** --- CANVAS RENDERING ENGINE --- */
         function renderTemplate(ctx) {
-            const tpl = templates.find(t => t.id === state.templateId);
+            const tpl = getTemplate();
             if(!tpl) return;
 
-            ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
+            ctx.clearRect(0, 0, tpl.width, tpl.height);
 
             // Layer 1: User Photo
             if (state.userImageObj) {
-                const r = tpl.photoRect;
-                ctx.save();
-                ctx.beginPath(); ctx.rect(r.x, r.y, r.w, r.h); ctx.clip();
-                ctx.drawImage(state.userImageObj, r.x, r.y, r.w, r.h);
-                ctx.restore();
+                drawPhotoPlaceholder(ctx, tpl);
             }
 
             // Layer 2: Template
             if (tpl.imgObj && tpl.loaded) {
-                ctx.drawImage(tpl.imgObj, 0, 0, CANVAS_W, CANVAS_H);
+                ctx.drawImage(tpl.imgObj, 0, 0, tpl.width, tpl.height);
             }
 
             // Layer 3: Dynamic Text
@@ -960,7 +1116,7 @@
             function getXPos(defaultCenterX) {
                 if(state.inputs.align === 'center') return defaultCenterX;
                 if(state.inputs.align === 'left') return 90; 
-                if(state.inputs.align === 'right') return CANVAS_W - 90; 
+                if(state.inputs.align === 'right') return tpl.width - 90; 
             }
 
             if(state.inputs.name) {
@@ -1004,6 +1160,8 @@
             btn.disabled = true;
 
             setTimeout(() => {
+                const tpl = getTemplate();
+                updateCanvasSizes(tpl);
                 renderTemplate(ctxExport);
                 els.finalResultImg.src = els.exportCanvas.toDataURL('image/png', 1.0);
                 
@@ -1024,22 +1182,54 @@
             document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
+        async function createExportBlob() {
+            return new Promise((resolve) => {
+                els.exportCanvas.toBlob((blob) => {
+                    resolve(blob);
+                }, 'image/png');
+            });
+        }
+
         async function nativeShare() {
             if (!navigator.share) return;
             try {
-                const blob = await (await fetch(els.exportCanvas.toDataURL('image/jpeg', 0.9))).blob();
-                const file = new File([blob], 'PCR_Birthday.jpg', { type: 'image/jpeg' });
-                const shareData = { title: 'Happy Birthday PCR Garu', text: state.inputs.message };
-                if (navigator.canShare && navigator.canShare({ files: [file] })) shareData.files = [file];
+                const blob = await createExportBlob();
+                if (!blob) return;
+                const file = new File([blob], `PCR_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
+                const shareData = { title: 'Happy Birthday PCR Garu', text: state.inputs.message, files: [file] };
+                if (navigator.canShare && !navigator.canShare({ files: [file] })) {
+                    delete shareData.files;
+                }
                 await navigator.share(shareData);
-            } catch (err) {}
+            } catch (err) {
+                console.warn('Native share error', err);
+            }
         }
 
-        function shareWhatsApp() {
-            window.open(`https://wa.me/?text=${encodeURIComponent(`Happy Birthday PCR Garu!\n\n${state.inputs.message}`)}`, '_blank');
+        async function shareWhatsApp() {
+            const blob = await createExportBlob();
+            if (!blob) {
+                downloadPoster();
+                alert('Image downloaded. Please attach the image manually in WhatsApp and send the message text.');
+                return;
+            }
+
+            const file = new File([blob], `PCR_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
+            const shareData = { title: 'Happy Birthday PCR Garu', text: state.inputs.message, files: [file] };
+
+            try {
+                if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+                    await navigator.share(shareData);
+                    return;
+                }
+            } catch (err) {
+                console.warn('WhatsApp share failed', err);
+            }
+
+            downloadPoster();
             setTimeout(() => {
-                if(confirm("For the best experience, download the image first and attach it to your WhatsApp message. Download now?")) downloadPoster();
-            }, 1000);
+                alert('Your image has been downloaded. Please attach it manually in WhatsApp and send your message.');
+            }, 200);
         }
 
         window.addEventListener('DOMContentLoaded', init);
