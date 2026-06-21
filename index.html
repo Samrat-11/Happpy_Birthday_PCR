@@ -289,6 +289,83 @@
         #crop-modal.active { transform: translateY(0); }
         
         .pb-safe { padding-bottom: calc(2rem + var(--safe-area-inset-bottom)); }
+
+        /* Template Card with Dynamic Aspect Ratio */
+        .template-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: 100%;
+        }
+
+        .template-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .template-card-image-container {
+            flex: 1;
+            position: relative;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 300px;
+            max-height: 600px;
+        }
+
+        @media (max-width: 640px) {
+            .template-card-image-container {
+                min-height: 250px;
+                max-height: 450px;
+            }
+        }
+
+        .template-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            background: white;
+        }
+
+        .template-card-info {
+            padding: 1rem;
+            text-align: center;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .template-card-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: #0f172a;
+        }
+
+        .template-card-arrow {
+            color: #d4af37;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .template-card:hover .template-card-arrow {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="text-brand-dark antialiased">
@@ -374,10 +451,10 @@
                         <h2 class="text-2xl font-serif font-bold" data-i18n="choose_template">Choose a Template</h2>
                         <p class="text-sm text-slate-500 mt-1" data-i18n="choose_template_desc">Select a design to start personalizing.</p>
                     </div>
-                    <span class="text-xs font-bold bg-brand-dark text-white px-3 py-1 rounded-full">2 Options</span>
+                    <span class="text-xs font-bold bg-brand-dark text-white px-3 py-1 rounded-full">7 Options</span>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4" id="template-list">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4 auto-rows-max" id="template-list">
                     <!-- Templates dynamically injected via JS -->
                 </div>
             </div>
@@ -566,12 +643,81 @@
     </main>
 
     <!-- Global Footer -->
-    <footer class="w-full text-center py-8 px-4 mt-auto z-10">
-        <div class="max-w-2xl mx-auto space-y-2">
-            <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday PCSR Garu</h4>
-            <p class="text-xs text-slate-500 font-medium">Initiated by <br><span class="text-brand-dark font-semibold">PCSR Talks</span></p>
-            <p class="text-xs text-slate-500 font-medium">Developed by <br><span class="text-brand-dark font-semibold">Samrat Kolaparthi</span></p>
-            <p class="text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-semibold">&copy; <span id="current-year"></span> All rights reserved.</p>
+    <footer class="w-full bg-gradient-to-b from-slate-50 to-slate-100 border-t border-slate-200 py-12 px-4 mt-auto z-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Logo & Title -->
+            <div class="text-center mb-8">
+                <div class="flex justify-center mb-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow-md flex items-center justify-center">
+                        <img src="./templates/footer-Logo.png" alt="PCSR Logo" class="w-full h-full object-contain rounded-full" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <span style="display:none; text-transform:uppercase; font-weight: bold; color: white; font-size: 20px;">pcsr</span>
+                    </div>
+                </div>
+                <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday PCSR Garu</h4>
+            </div>
+
+            <!-- Credits Section -->
+            <div class="grid grid-cols-2 gap-6 mb-8 py-6 border-y border-slate-200">
+                <!-- Initiated By -->
+                <div class="text-center md:text-right md:border-r border-slate-200 md:pr-6">
+                    <div class="flex items-center justify-center md:justify-end gap-2 mb-2">
+                        <!-- <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow-sm flex items-center justify-center flex-shrink-0">
+                            <img src="https://yt3.googleusercontent.com/ObICO3EVk6Mk-KitHb8ISoKC8hVs-zQiXTle0-Og7DXfFPjW3uyTmvqVWlfeQKczDDMaOK1-rg=s900-c-k-c0x00ffffff-no-rj" alt="PCSR" class="w-full h-full object-contain rounded-full" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <span style="display:none; text-transform:uppercase; font-weight: bold; color: white; font-size: 10px;">pcsr</span>
+                        </div> -->
+                        <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Initiated by</p>
+                    </div>
+                    <a href="https://www.instagram.com/thepcsrtalks?igsh=MXVjZDdzNno5dGg4dw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        PCSR Talks
+                        <i class="fa-solid fa-arrow-up-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+
+                <!-- Developed By -->
+                <div class="text-center md:text-left md:pl-6">
+                    <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mb-1">Developed by</p>
+                    <a href="https://wa.me/918247634398?text=Hello%20Samrat" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        Samrat Kolaparthi
+                        <i class="fa-brands fa-whatsapp text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact & Social Links -->
+            <div class="flex flex-col items-center gap-6 mb-8">
+                <!-- Contact Info -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                    <!-- Phone -->
+                    <a href="tel:+918247634398" class="flex items-center gap-2 text-slate-600 hover:text-brand-dark transition-colors group">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 group-hover:bg-brand-dark group-hover:text-white flex items-center justify-center transition-all text-slate-600 group-hover:text-white">
+                            <i class="fa-solid fa-phone text-sm"></i>
+                        </div>
+                        <span class="text-sm font-medium">+91-8247634398</span>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/918247634398?text=Hello%20PCSR%20Talks" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-[#25D366] hover:text-[#128C7E] transition-colors group">
+                        <div class="w-10 h-10 rounded-full bg-[#E8F5E9] group-hover:bg-[#25D366] group-hover:text-white flex items-center justify-center transition-all">
+                            <i class="fa-brands fa-whatsapp text-lg group-hover:text-white"></i>
+                        </div>
+                        <span class="text-sm font-medium hidden sm:inline">Chat</span>
+                    </a>
+
+                    <!-- Instagram
+                    <a href="https://www.instagram.com/thepcsrtalks?igsh=MXVjZDdzNno5dGg4dw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-[#E4405F] hover:text-[#C13584] transition-colors group">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#FED373] to-[#F15245] group-hover:opacity-80 flex items-center justify-center transition-all text-white">
+                            <i class="fa-brands fa-instagram text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium hidden sm:inline">Follow</span>
+                    </a> -->
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center pt-6 border-t border-slate-200">
+                <p class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">&copy; <span id="current-year"></span> PCSR - Nellore MLC. All rights reserved.</p>
+                <p class="text-[10px] text-slate-300 mt-2">Made with <i class="fa-solid fa-heart text-red-500"></i> for PCSR Garu</p>
+            </div>
         </div>
     </footer>
 
@@ -730,20 +876,22 @@
                 id: `tpl-1`,
                 name: `Light Theme`,
                 src: './templates/template1.png',
-                width: 1080,
-                height: 1080,
-                photoRect: { x: 61.5, y: 520, w: 370, h: 370, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                referenceImage: './templates/template1-reference.jpeg',
+                width: 2464,
+                height: 2464,
+                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1233, y: 2209, size: 110, weight: 'bold', align: 'center' },
-                    place: { x: 1233, y: 2328, size: 73, weight: '500', align: 'center' },
-                    message: { x: 1233, y: 2456, size: 64, weight: 'normal', align: 'center', maxWidth: 2053, lineHeight: 80 }
+                    name: { x: 1232, y: 1450, size: 110, weight: 'bold', align: 'center' },
+                    place: { x: 1232, y: 1580, size: 73, weight: '500', align: 'center' },
+                    message: { x: 1232, y: 1700, size: 64, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 80 }
                 },
-                imgObj: null, loaded: false
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
             {
                 id: `tpl-2`,
                 name: `Dark Theme`,
                 src: './templates/template2.png',
+                referenceImage: './templates/template2-reference.jpg',
                 width: 1632,
                 height: 2480,
                 photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
@@ -752,7 +900,82 @@
                     place: { x: 816, y: 1737, size: 48, weight: '500', align: 'center' },
                     message: { x: 816, y: 1814, size: 42, weight: 'normal', align: 'center', maxWidth: 1358, lineHeight: 54 }
                 },
-                imgObj: null, loaded: false
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            {
+                id: `tpl-3`,
+                name: `Dark Theme`,
+                src: './templates/template3.png',
+                referenceImage: './templates/template3-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
+                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
+                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            {
+                id: `tpl-4`,
+                name: `Dark Theme`,
+                src: './templates/template4.png',
+                referenceImage: './templates/template4-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
+                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
+                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            {
+                id: `tpl-5`,
+                name: `Dark Theme`,
+                src: './templates/template5.png',
+                referenceImage: './templates/template5-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
+                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
+                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            {
+                id: `tpl-6`,
+                name: `Dark Theme`,
+                src: './templates/template6.png',
+                referenceImage: './templates/template6-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
+                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
+                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            {
+                id: `tpl-7`,
+                name: `Dark Theme`,
+                src: './templates/template7.png',
+                referenceImage: './templates/template7-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
+                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
+                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             }
         ];
 
@@ -795,7 +1018,7 @@
         }
 
         function preloadTemplates() {
-            function detectPlaceholderFromImage(img) {
+            function detectPlaceholderFromImage(img, templateWidth, templateHeight) {
                 try {
                     const w = img.naturalWidth || img.width;
                     const h = img.naturalHeight || img.height;
@@ -815,7 +1038,7 @@
                         for (let x = 0; x < w; x++) {
                             const idx = (y * w + x) * 4 + 3; // alpha
                             const a = data[idx];
-                            if (a <= 16) { // consider mostly transparent
+                            if (a <= 32) { // transparent or very transparent
                                 count++;
                                 if (x < minX) minX = x;
                                 if (y < minY) minY = y;
@@ -834,58 +1057,95 @@
                     const overallRatio = bboxArea / (w * h);
 
                     // Heuristics: require a reasonable bounding box and density
-                    if (bboxArea < 1000 || overallRatio < 0.0005) return null;
+                    if (bboxArea < 500 || overallRatio < 0.0001) return null;
 
                     let shape = 'rectangle';
                     const ratio = boxW / boxH;
-                    if (Math.abs(ratio - 1) < 0.3 && transparentRatio > 0.35) shape = 'circle';
-                    else if (transparentRatio > 0.25) shape = (ratio > 0.9 && ratio < 1.1) ? 'square' : 'rectangle';
+                    if (Math.abs(ratio - 1) < 0.25 && transparentRatio > 0.4) {
+                        shape = 'circle';
+                    } else if (ratio > 0.85 && ratio < 1.15 && transparentRatio > 0.3) {
+                        shape = 'square';
+                    }
 
-                    return { x: Math.max(0, minX), y: Math.max(0, minY), w: boxW, h: boxH, shape, cropAspect: boxW / boxH };
+                    // Scale detected coordinates from image space to template space
+                    const scaleX = templateWidth / w;
+                    const scaleY = templateHeight / h;
+
+                    return {
+                        x: Math.round(minX * scaleX),
+                        y: Math.round(minY * scaleY),
+                        w: Math.round(boxW * scaleX),
+                        h: Math.round(boxH * scaleY),
+                        shape: shape,
+                        cropAspect: boxW / boxH
+                    };
                 } catch (err) {
                     return null;
                 }
             }
 
-            return Promise.all(templates.map(tpl => new Promise((resolve, reject) => {
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.onload = () => {
-                    tpl.imgObj = img;
-                    tpl.loaded = true;
-
-                    // Automatic placeholder detection (transparent region)
-                    try {
-                        const detected = detectPlaceholderFromImage(img);
-                        if (detected) {
-                            // Scale detection from the image's natural pixel space into the
-                            // template's declared width/height so coordinates map to the canvas.
-                            const imgW = img.naturalWidth || img.width;
-                            const imgH = img.naturalHeight || img.height;
-                            const scaleX = tpl.width / imgW;
-                            const scaleY = tpl.height / imgH;
-
-                            const scaled = {
-                                x: Math.max(0, Math.round(detected.x * scaleX)),
-                                y: Math.max(0, Math.round(detected.y * scaleY)),
-                                w: Math.max(1, Math.round(detected.w * scaleX)),
-                                h: Math.max(1, Math.round(detected.h * scaleY)),
-                                shape: detected.shape,
-                                cropAspect: detected.w / detected.h
-                            };
-
-                            tpl.photoRect = Object.assign({ offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 }, scaled);
-                            console.info('Auto-detected photoRect for', tpl.id, 'detected:', detected, 'scaled:', tpl.photoRect);
-                        }
-                    } catch (e) {
-                        console.warn('Placeholder detection failed for', tpl.src, e);
-                    }
-
+            // Load reference images for dimension tracking
+            const refImagePromises = templates.map(tpl => new Promise((resolve) => {
+                const refImg = new Image();
+                refImg.crossOrigin = 'anonymous';
+                refImg.onload = () => {
+                    tpl.refImageWidth = refImg.naturalWidth || refImg.width;
+                    tpl.refImageHeight = refImg.naturalHeight || refImg.height;
                     resolve(tpl);
                 };
-                img.onerror = () => reject(new Error(`Failed to load ${tpl.src}`));
-                img.src = tpl.src;
-            })));
+                refImg.onerror = () => {
+                    // If reference image fails to load, use template dimensions as fallback
+                    tpl.refImageWidth = tpl.width;
+                    tpl.refImageHeight = tpl.height;
+                    resolve(tpl);
+                };
+                refImg.src = tpl.referenceImage;
+            }));
+
+            return Promise.all([
+                Promise.all(refImagePromises),
+                Promise.all(templates.map(tpl => new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = () => {
+                        tpl.imgObj = img;
+                        tpl.loaded = true;
+
+                        // Auto-detect placeholder from transparent areas for templates 2-7
+                        // Keep template 1 with hardcoded value (already working perfectly)
+                        if (!['tpl-1'].includes(tpl.id)) {
+                            try {
+                                const detected = detectPlaceholderFromImage(img, tpl.width, tpl.height);
+                                if (detected) {
+                                    tpl.photoRect = {
+                                        x: detected.x,
+                                        y: detected.y,
+                                        w: detected.w,
+                                        h: detected.h,
+                                        shape: detected.shape,
+                                        cropAspect: detected.cropAspect,
+                                        offsetX: 0,
+                                        offsetY: 0,
+                                        zoom: 1,
+                                        rotation: 0
+                                    };
+                                    console.info(`✓ Auto-detected placeholder for ${tpl.id}:`, { x: detected.x, y: detected.y, w: detected.w, h: detected.h, shape: detected.shape });
+                                } else {
+                                    console.warn(`⚠ No placeholder detected for ${tpl.id}, keeping default photoRect`);
+                                }
+                            } catch (e) {
+                                console.warn(`Placeholder detection failed for ${tpl.id}:`, e);
+                            }
+                        } else {
+                            console.info(`✓ Using hardcoded photoRect for ${tpl.id} (template working perfectly)`);
+                        }
+
+                        resolve(tpl);
+                    };
+                    img.onerror = () => reject(new Error(`Failed to load ${tpl.src}`));
+                    img.src = tpl.src;
+                })))
+            ]).then(() => templates);
         }
 
         async function init() {
@@ -921,14 +1181,20 @@
             setAlignment(state.inputs.align);
 
             templates.forEach(tpl => {
+                // Calculate aspect ratio from template dimensions for dynamic sizing
+                const aspectRatio = tpl.width / tpl.height;
+
                 const html = `
-                    <div onclick="selectTemplate('${tpl.id}')" class="bg-white rounded-[1.5rem] overflow-hidden shadow-sm cursor-pointer transform transition duration-200 hover:-translate-y-1 hover:shadow-md border border-slate-200 relative group">
-                        <div class="aspect-[4/5] relative bg-slate-50">
-                            <img src="${tpl.src}" class="w-full h-full object-cover" alt="${tpl.name}" onerror="this.src='https://placehold.co/800x1000/f8fafc/94a3b8?text=Template'">
+                    <div onclick="selectTemplate('${tpl.id}')" class="template-card">
+                        <div class="template-card-image-container" style="aspect-ratio: ${aspectRatio};">
+                            <img src="${tpl.referenceImage}" 
+                                 class="template-card-image" 
+                                 alt="${tpl.name}" 
+                                 onerror="this.src='${tpl.src}'">
                         </div>
-                        <div class="p-3 text-center bg-white border-t border-slate-100 flex justify-between items-center px-4">
-                            <h3 class="font-serif font-bold text-sm text-brand-dark">${tpl.name}</h3>
-                            <i class="fa-solid fa-arrow-right text-brand-gold text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <div class="template-card-info">
+                            <h3 class="template-card-name">${tpl.name}</h3>
+                            <i class="fa-solid fa-arrow-right template-card-arrow"></i>
                         </div>
                     </div>
                 `;
