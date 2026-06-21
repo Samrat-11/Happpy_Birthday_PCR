@@ -1426,7 +1426,12 @@
             }
 
             const file = new File([blob], `pcsr_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
-            const shareData = { title: 'Happy Birthday pcsr Garu', text: state.inputs.message, files: [file] };
+           const file = new File([blob], `pcsr_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
+                const shareData = {
+                    title: 'Happy Birthday pcsr Garu',
+                    text: `${state.inputs.message}\n\n🎉 Want to create the same poster? 👉 https://www.happybirthdaypcsr.com`,
+                    files: [file]
+                };
 
             try {
                 if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
