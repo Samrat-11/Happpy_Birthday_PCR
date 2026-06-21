@@ -253,21 +253,6 @@
         input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type="color"]::-webkit-color-swatch { border: 2px solid #e2e8f0; border-radius: 50%; }
 
-        /* Alignment Toggle */
-        .align-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 0.75rem;
-            color: #64748b;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
-        }
-        .align-btn.active {
-            background: #0f172a;
-            color: #ffffff;
-            border-color: #0f172a;
-        }
-
         /* Drag & Drop State */
         .dragover {
             background-color: #f1f5f9;
@@ -370,10 +355,6 @@
 </head>
 <body class="text-brand-dark antialiased">
 
-    <!-- ========================================== -->
-    <!--                  HTML                      -->
-    <!-- ========================================== -->
-
     <!-- Floating Top Navigation -->
     <header class="fixed top-3 left-0 w-full z-50 px-4">
         <div class="glass-nav rounded-[1.25rem] p-[5px] flex justify-between items-center max-w-2xl mx-auto transition-all duration-300">
@@ -409,7 +390,7 @@
                     Parvathareddy Chandrasekhar Reddy Garu
                 </h2>
                 
-                <!-- Leader Profile & Signature (Rounded Vertical Rectangle) -->
+                <!-- Leader Profile & Signature -->
                 <div class="flex flex-col items-center justify-center mb-6 relative">
                     <div class="w-50 h-100 md:w-100 md:h-100 rounded-3xl border-[5px] border-white shadow-xl overflow-hidden relative bg-brand-dark">
                         <img src="./templates/pcr photo.jpeg" 
@@ -417,10 +398,6 @@
                              alt="Parvathareddy Chandrasekhar Reddy" 
                              class="w-full h-full object-cover">
                     </div>
-                    <!-- Golden Signature -->
-                    <!-- <div class="font-signature text-brand-gold text-shadow-glow text-6xl md:text-7xl -mt-8 ml-20 rotate-[-6deg] z-10">
-                        PCSR
-                    </div> -->
                 </div>
 
                 <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto px-4" data-i18n="hero_desc">
@@ -438,7 +415,6 @@
 
         <!-- ================= 2. VIEW: TEMPLATES ================= -->
         <section id="view-templates" class="view-section">
-            <!-- Consistent In-Flow Back Button -->
             <div class="w-full mb-4">
                 <button onclick="goBack('view-landing')" class="w-10 h-10 bg-white border border-slate-200 rounded-full shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all active:scale-95 text-brand-dark">
                     <i class="fa-solid fa-chevron-left text-sm"></i>
@@ -531,11 +507,6 @@
                             <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_name">Your Name</label>
                             <input type="text" id="input-name" class="premium-input" placeholder="e.g. Rahul Kumar">
                         </div>
-                        
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_place">Your Place / Constituency</label>
-                            <input type="text" id="input-place" class="premium-input" placeholder="e.g. Hyderabad">
-                        </div>
 
                         <div class="md:col-span-2">
                             <div class="flex justify-between items-end mb-2">
@@ -543,19 +514,7 @@
                                 <span class="text-xs text-slate-400" id="char-count">0/80</span>
                             </div>
                             <textarea id="input-message" class="premium-input resize-none h-20" maxlength="80"></textarea>
-                        </div>
-
-                        <!-- Typography Settings -->
-                        <div>
-                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_font">Font Style</label>
-                            <div class="relative">
-                                <select id="input-font" class="premium-select appearance-none">
-                                    <option value="Inter">Modern (Inter)</option>
-                                    <option value="'Playfair Display'">Classic (Playfair)</option>
-                                    <option value="Roboto">Clean (Roboto)</option>
-                                </select>
-                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
-                            </div>
+                            
                         </div>
 
                         <div>
@@ -563,16 +522,6 @@
                             <div class="flex items-center gap-3 bg-[#f8fafc] p-2 rounded-2xl border border-slate-100">
                                 <input type="color" id="input-color" value="#0f172a">
                                 <span class="text-sm font-medium text-brand-dark uppercase" id="color-hex">#0F172A</span>
-                            </div>
-                        </div>
-
-                        <!-- Alignment & Sizing -->
-                        <div>
-                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase">Text Alignment</label>
-                            <div class="flex gap-2">
-                                <button onclick="setAlignment('left')" id="align-left" class="align-btn flex-1"><i class="fa-solid fa-align-left"></i></button>
-                                <button onclick="setAlignment('center')" id="align-center" class="align-btn flex-1 active"><i class="fa-solid fa-align-center"></i></button>
-                                <button onclick="setAlignment('right')" id="align-right" class="align-btn flex-1"><i class="fa-solid fa-align-right"></i></button>
                             </div>
                         </div>
 
@@ -659,57 +608,43 @@
             <!-- Credits Section -->
             <div class="grid grid-cols-2 gap-6 mb-8 py-6 border-y border-slate-200">
                 <!-- Initiated By -->
-                <div class="text-center md:text-right md:border-r border-slate-200 md:pr-6">
+                <div class="text-center align-center md:text-right md:border-r border-slate-200 md:pr-6">
                     <div class="flex items-center justify-center md:justify-end gap-2 mb-2">
-                        <!-- <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow-sm flex items-center justify-center flex-shrink-0">
-                            <img src="https://yt3.googleusercontent.com/ObICO3EVk6Mk-KitHb8ISoKC8hVs-zQiXTle0-Og7DXfFPjW3uyTmvqVWlfeQKczDDMaOK1-rg=s900-c-k-c0x00ffffff-no-rj" alt="PCSR" class="w-full h-full object-contain rounded-full" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <span style="display:none; text-transform:uppercase; font-weight: bold; color: white; font-size: 10px;">pcsr</span>
-                        </div> -->
                         <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Initiated by</p>
                     </div>
                     <a href="https://www.instagram.com/thepcsrtalks?igsh=MXVjZDdzNno5dGg4dw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
                         PCSR Talks
                         <i class="fa-solid fa-arrow-up-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a><br>
+                    <a href="" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        K V Dileep Kumar
+                    </a><br>
+                    <a href="" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        E Naveen Kumar
+                    </a><br>
+                    <a href="" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        B Trinath Reddy
+                    </a><br>
+                    <a href="" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        Akhil Raja
                     </a>
                 </div>
 
                 <!-- Developed By -->
                 <div class="text-center md:text-left md:pl-6">
                     <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mb-1">Developed by</p>
-                    <a href="https://wa.me/918247634398?text=Hello%20Samrat" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
-                        Samrat Kolaparthi
-                        <i class="fa-brands fa-whatsapp text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Contact & Social Links -->
-            <div class="flex flex-col items-center gap-6 mb-8">
-                <!-- Contact Info -->
-                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                    <!-- Phone -->
-                    <a href="tel:+918247634398" class="flex items-center gap-2 text-slate-600 hover:text-brand-dark transition-colors group">
-                        <div class="w-10 h-10 rounded-full bg-slate-200 group-hover:bg-brand-dark group-hover:text-white flex items-center justify-center transition-all text-slate-600 group-hover:text-white">
-                            <i class="fa-solid fa-phone text-sm"></i>
-                        </div>
-                        <span class="text-sm font-medium">+91-8247634398</span>
-                    </a>
-
-                    <!-- WhatsApp -->
-                    <a href="https://wa.me/918247634398?text=Hello%20PCSR%20Talks" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-[#25D366] hover:text-[#128C7E] transition-colors group">
+                     <!-- WhatsApp -->
+                    <!-- <a href="https://wa.me/918247634398?text=Hello%20PCSR%20Talks" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-[#25D366] hover:text-[#128C7E] transition-colors group">
                         <div class="w-10 h-10 rounded-full bg-[#E8F5E9] group-hover:bg-[#25D366] group-hover:text-white flex items-center justify-center transition-all">
                             <i class="fa-brands fa-whatsapp text-lg group-hover:text-white"></i>
                         </div>
                         <span class="text-sm font-medium hidden sm:inline">Chat</span>
-                    </a>
-
-                    <!-- Instagram
-                    <a href="https://www.instagram.com/thepcsrtalks?igsh=MXVjZDdzNno5dGg4dw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-[#E4405F] hover:text-[#C13584] transition-colors group">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#FED373] to-[#F15245] group-hover:opacity-80 flex items-center justify-center transition-all text-white">
-                            <i class="fa-brands fa-instagram text-lg"></i>
-                        </div>
-                        <span class="text-sm font-medium hidden sm:inline">Follow</span>
                     </a> -->
+                    <a href="https://wa.me/918247634398?text=Hello%20Samrat" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                        Samrat Kolaparthi
+                        <i class="fa-brands fa-whatsapp text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                    
                 </div>
             </div>
 
@@ -752,11 +687,29 @@
     <!-- Hidden High-Res Canvas -->
     <canvas id="export-canvas" style="display: none;"></canvas>
 
+    <!-- Custom Toast Notification -->
+    <div id="toast-container" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 translate-y-20 opacity-0 pointer-events-none">
+        <div class="bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-3">
+            <i class="fa-solid fa-info-circle text-brand-gold"></i>
+            <span id="toast-message" class="text-sm font-medium whitespace-nowrap"></span>
+        </div>
+    </div>
+
     <!-- ========================================== -->
     <!--               JAVASCRIPT                   -->
     <!-- ========================================== -->
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        /** --- CUSTOM TOAST NOTIFICATION --- */
+        function showToast(message) {
+            const toast = document.getElementById('toast-container');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
 
         /** --- LANGUAGE DICTIONARY --- */
         const i18n = {
@@ -776,9 +729,7 @@
                 personalize_title: "Add Your Details",
                 live_preview: "Live Preview",
                 label_name: "Your Name",
-                label_place: "Your Place / Constituency",
                 label_message: "Custom Message",
-                label_font: "Font Style",
                 label_color: "Text Color",
                 btn_apply_generate: "Apply & Generate Poster",
                 ready_title: "Success!",
@@ -790,7 +741,11 @@
                 modal_adjust: "Adjust Photo",
                 btn_cancel: "Cancel",
                 btn_apply_crop: "Crop & Apply",
-                default_msg: "Wishing you great health and success!"
+                default_msg: "Wishing you great health and success!",
+                tone_respectful: "Respectful Tone",
+                tone_friendly: "Friendly Tone",
+                tone_short: "Short & Sweet",
+                btn_magic: "AI Suggest"
             },
             te: {
                 hero_title: "జన్మదిన శుభాకాంక్షలు",
@@ -808,9 +763,7 @@
                 personalize_title: "మీ వివరాలను జోడించండి",
                 live_preview: "లైవ్ ప్రివ్యూ",
                 label_name: "మీ పేరు",
-                label_place: "మీ ఊరు / నియోజకవర్గం",
                 label_message: "సందేశం",
-                label_font: "ఫాంట్ శైలి",
                 label_color: "అక్షరాల రంగు",
                 btn_apply_generate: "పోస్టర్‌ను రూపొందించండి",
                 ready_title: "విజయం!",
@@ -822,7 +775,11 @@
                 modal_adjust: "ఫోటోను క్రాప్ చేయండి",
                 btn_cancel: "రద్దు",
                 btn_apply_crop: "క్రాప్ చేయండి",
-                default_msg: "మీకు ఆయురారోగ్యాలు కలగాలని కోరుకుంటున్నాను!"
+                default_msg: "మీకు ఆయురారోగ్యాలు కలగాలని కోరుకుంటున్నాను!",
+                tone_respectful: "గౌరవప్రదమైన",
+                tone_friendly: "స్నేహపూర్వక",
+                tone_short: "చిన్నది",
+                btn_magic: "✨ సూచించు"
             }
         };
 
@@ -858,6 +815,7 @@
             renderPreview();
         }
 
+
         /** --- STATE & ENGINE CONFIG --- */
         const DEFAULT_CANVAS_WIDTH = 1080;
         const DEFAULT_CANVAS_HEIGHT = 1350;
@@ -866,7 +824,7 @@
             currentView: 'view-landing',
             templateId: 'tpl-1',
             userImageObj: null,
-            inputs: { name: "", place: "", message: i18n.en.default_msg, font: "Inter", color: "#0f172a", align: "center", scale: 1 },
+            inputs: { name: "", message: i18n.en.default_msg, color: "#0f172a", scale: 1 },
             isRendering: false,
             generatedImageBlob: null
         };
@@ -881,9 +839,8 @@
                 height: 2464,
                 photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1232, y: 1450, size: 110, weight: 'bold', align: 'center' },
-                    place: { x: 1232, y: 1580, size: 73, weight: '500', align: 'center' },
-                    message: { x: 1232, y: 1700, size: 64, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 80 }
+                    name: { size: 110, weight: 'bold' },
+                    message: { size: 64, weight: 'normal', lineHeight: 80 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -896,9 +853,8 @@
                 height: 2480,
                 photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 816, y: 1661, size: 73, weight: 'bold', align: 'center' },
-                    place: { x: 816, y: 1737, size: 48, weight: '500', align: 'center' },
-                    message: { x: 816, y: 1814, size: 42, weight: 'normal', align: 'center', maxWidth: 1358, lineHeight: 54 }
+                    name: { size: 73, weight: 'bold' },
+                    message: { size: 42, weight: 'normal', lineHeight: 54 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -911,9 +867,8 @@
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
-                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
-                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -926,9 +881,8 @@
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
-                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
-                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -941,9 +895,8 @@
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
-                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
-                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -956,9 +909,8 @@
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
-                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
-                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -971,9 +923,8 @@
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textConfig: {
-                    name: { x: 1200, y: 1600, size: 100, weight: 'bold', align: 'center' },
-                    place: { x: 1200, y: 1710, size: 65, weight: '500', align: 'center' },
-                    message: { x: 1200, y: 1820, size: 56, weight: 'normal', align: 'center', maxWidth: 2000, lineHeight: 70 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             }
@@ -1129,15 +1080,10 @@
                                         zoom: 1,
                                         rotation: 0
                                     };
-                                    console.info(`✓ Auto-detected placeholder for ${tpl.id}:`, { x: detected.x, y: detected.y, w: detected.w, h: detected.h, shape: detected.shape });
-                                } else {
-                                    console.warn(`⚠ No placeholder detected for ${tpl.id}, keeping default photoRect`);
                                 }
                             } catch (e) {
                                 console.warn(`Placeholder detection failed for ${tpl.id}:`, e);
                             }
-                        } else {
-                            console.info(`✓ Using hardcoded photoRect for ${tpl.id} (template working perfectly)`);
                         }
 
                         resolve(tpl);
@@ -1161,7 +1107,7 @@
 
             updateCanvasSizes(getTemplate());
 
-            ['name', 'place', 'message', 'font', 'color', 'scale'].forEach(key => {
+            ['name', 'message', 'color', 'scale'].forEach(key => {
                 const input = document.getElementById(`input-${key}`);
                 if(input) {
                     input.value = state.inputs[key];
@@ -1178,7 +1124,6 @@
             });
             
             document.getElementById('char-count').textContent = `${state.inputs.message.length}/80`;
-            setAlignment(state.inputs.align);
 
             templates.forEach(tpl => {
                 // Calculate aspect ratio from template dimensions for dynamic sizing
@@ -1210,15 +1155,6 @@
         ['dragenter', 'dragover'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.add('dragover'), false));
         ['dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.remove('dragover'), false));
         dropZone.addEventListener('drop', e => { if(e.dataTransfer.files.length) handleFileSelect({target: {files: e.dataTransfer.files}}); }, false);
-
-        // Alignment & State Control
-        function setAlignment(align) {
-            state.inputs.align = align;
-            ['left', 'center', 'right'].forEach(a => document.getElementById(`align-${a}`).classList.remove('active'));
-            document.getElementById(`align-${align}`).classList.add('active');
-            saveState();
-            renderPreview();
-        }
 
         function saveState() {
             try { localStorage.setItem('pcsr_wishes_state', JSON.stringify({ inputs: state.inputs, lang: currentLang })); } 
@@ -1304,10 +1240,7 @@
                 reader.onload = function(event) {
                     els.cropModal.classList.add('active'); // Show modal immediately
                     
-                    // CRITICAL FIX: Wait for image to load into DOM before initializing Cropper
                     els.cropperImage.onload = function() {
-                        // Small timeout to allow the CSS modal transition to complete
-                        // This ensures Cropper.js calculates the screen/container dimensions perfectly
                         setTimeout(() => {
                             if (cropper) cropper.destroy();
                             
@@ -1378,39 +1311,50 @@
             const scale = parseFloat(state.inputs.scale) || 1;
             
             ctx.fillStyle = state.inputs.color;
-            ctx.textAlign = state.inputs.align;
+            ctx.textAlign = 'center';
 
-            function getXPos(defaultCenterX) {
-                if(state.inputs.align === 'center') return defaultCenterX;
-                if(state.inputs.align === 'left') return 90; 
-                if(state.inputs.align === 'right') return tpl.width - 90; 
+            let textX = tpl.width / 2;
+            let textYStart = tpl.height * 0.75; // Fallback
+            
+            if (tpl.photoRect) {
+                textX = tpl.photoRect.x + (tpl.photoRect.w / 2); 
+                const gap = tpl.height * 0.04; 
+                textYStart = (tpl.photoRect.y + tpl.photoRect.h) + gap + (c.name.size * scale);
             }
+
+            // Calculate a safe maximum width based on the center point to strictly prevent edge cutoff
+            const safeEdgeDistance = Math.min(textX, tpl.width - textX);
+            const maxTextWidth = safeEdgeDistance * 2 * 0.9; // 90% of the symmetrical available width
 
             if(state.inputs.name) {
-                ctx.font = `${c.name.weight} ${c.name.size * scale}px ${state.inputs.font}`;
-                ctx.fillText(state.inputs.name.toUpperCase(), getXPos(c.name.x), c.name.y);
-            }
-
-            if(state.inputs.place) {
-                ctx.font = `${c.place.weight} ${c.place.size * scale}px ${state.inputs.font}`;
-                ctx.globalAlpha = 0.8;
-                ctx.fillText(state.inputs.place, getXPos(c.place.x), c.place.y + ((c.name.size * scale) - c.name.size));
-                ctx.globalAlpha = 1.0;
+                ctx.font = `${c.name.weight} ${c.name.size * scale}px Inter`;
+                // Add maxTextWidth constraint to compress exceptionally long names automatically
+                ctx.fillText(state.inputs.name.toUpperCase(), textX, textYStart, maxTextWidth);
             }
 
             if(state.inputs.message) {
-                ctx.font = `${c.message.weight} ${c.message.size * scale}px ${state.inputs.font}`;
+                ctx.font = `${c.message.weight} ${c.message.size * scale}px Inter`;
                 const words = state.inputs.message.split(' ');
-                let line = '', yPos = c.message.y + ((c.name.size * scale) - c.name.size) * 2;
+                
+                let yPos = state.inputs.name ? textYStart + (c.message.lineHeight * scale * 1.2) : textYStart;
+                
+                let line = '';
                 for(let n = 0; n < words.length; n++) {
                     let testLine = line + words[n] + ' ';
-                    if (ctx.measureText(testLine).width > c.message.maxWidth && n > 0) {
-                        ctx.fillText(line.trim(), getXPos(c.message.x), yPos);
+                    // Fix: Use line.length > 0 to properly force wrap even when a single word is huge
+                    if (ctx.measureText(testLine).width > maxTextWidth && line.length > 0) {
+                        ctx.fillText(line.trim(), textX, yPos);
                         line = words[n] + ' ';
                         yPos += c.message.lineHeight * scale;
-                    } else { line = testLine; }
+                    } else { 
+                        line = testLine; 
+                    }
                 }
-                ctx.fillText(line.trim(), getXPos(c.message.x), yPos);
+                
+                // Print the final remaining line
+                if (line.trim().length > 0) {
+                    ctx.fillText(line.trim(), textX, yPos);
+                }
             }
         }
 
@@ -1477,7 +1421,7 @@
             const blob = await createExportBlob();
             if (!blob) {
                 downloadPoster();
-                alert('Image downloaded. Please attach the image manually in WhatsApp and send the message text.');
+                showToast('Image downloaded. Please attach it manually in WhatsApp.');
                 return;
             }
 
@@ -1495,7 +1439,7 @@
 
             downloadPoster();
             setTimeout(() => {
-                alert('Your image has been downloaded. Please attach it manually in WhatsApp and send your message.');
+                showToast('Image downloaded! Attach it manually in WhatsApp and send your message.');
             }, 200);
         }
 
