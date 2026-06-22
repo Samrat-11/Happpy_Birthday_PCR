@@ -74,6 +74,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        .clickable-logo { cursor: pointer; }
+
         main {
             flex: 1; /* Takes up all available space between header and footer */
             display: flex;
@@ -359,11 +361,11 @@
     <header class="fixed top-3 left-0 w-full z-50 px-4">
         <div class="glass-nav rounded-[1.25rem] p-[5px] flex justify-between items-center max-w-2xl mx-auto transition-all duration-300">
             <div class="flex items-center gap-3 pl-2">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow flex items-center justify-center font-bold text-white text-sm overflow-hidden">
+                <div class="clickable-logo w-9 h-9 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow flex items-center justify-center font-bold text-white text-sm overflow-hidden" role="link" tabindex="0" aria-label="Go to home page">
                     <img src="https://yt3.googleusercontent.com/ObICO3EVk6Mk-KitHb8ISoKC8hVs-zQiXTle0-Og7DXfFPjW3uyTmvqVWlfeQKczDDMaOK1-rg=s900-c-k-c0x00ffffff-no-rj" alt="PCR Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                     <span style="display:none; text-transform:uppercase;">pcsr</span>
                 </div>
-                <span class="font-serif font-semibold text-sm tracking-wide text-brand-dark">PCSR - Nellore MLC</span>
+                <span class="font-serif font-semibold text-sm tracking-wide text-brand-dark">PCSR - Teacher's MLC</span>
             </div>
             
             <!-- Language Toggle -->
@@ -427,7 +429,7 @@
                         <h2 class="text-2xl font-serif font-bold" data-i18n="choose_template">Choose a Template</h2>
                         <p class="text-sm text-slate-500 mt-1" data-i18n="choose_template_desc">Select a design to start personalizing.</p>
                     </div>
-                    <span class="text-xs font-bold bg-brand-dark text-white px-3 py-1 rounded-full">7 Options</span>
+                    <span class="text-xs font-bold bg-brand-dark text-white px-3 py-1 rounded-full">8 Options</span>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4 auto-rows-max" id="template-list">
@@ -509,12 +511,8 @@
                         </div>
 
                         <div class="md:col-span-2">
-                            <div class="flex justify-between items-end mb-2">
-                                <label class="block text-xs font-bold tracking-widest text-brand-dark uppercase" data-i18n="label_message">Custom Message</label>
-                                <span class="text-xs text-slate-400" id="char-count">0/80</span>
-                            </div>
-                            <textarea id="input-message" class="premium-input resize-none h-20" maxlength="80"></textarea>
-                            
+                            <label class="block text-xs font-bold tracking-widest text-brand-dark mb-2 uppercase" data-i18n="label_designation">Designation</label>
+                            <input type="text" id="input-designation" class="premium-input" placeholder="e.g. YSRCP Leader">
                         </div>
 
                         <div>
@@ -571,6 +569,14 @@
                             <i class="fa-brands fa-whatsapp text-lg"></i>
                             <span>WhatsApp</span>
                         </button>
+                        <button onclick="shareOnX()" class="btn-secondary !bg-white !text-black !border-black hover:!bg-black hover:!text-white" aria-label="Share on X">
+                            <span class="text-lg font-bold leading-none">X</span>
+                            <span>Share</span>
+                        </button>
+                        <button onclick="shareOnFacebook()" class="btn-secondary !bg-white !text-[#1877F2] !border-[#1877F2] hover:!bg-[#1877F2] hover:!text-white" aria-label="Share on Facebook">
+                            <i class="fa-brands fa-facebook-f text-lg"></i>
+                            <span>Facebook</span>
+                        </button>
                         <button onclick="nativeShare()" id="btn-native-share" class="btn-secondary">
                             <i class="fa-solid fa-share-nodes"></i>
                             <span data-i18n="share_native">More</span>
@@ -597,12 +603,12 @@
             <!-- Logo & Title -->
             <div class="text-center mb-8">
                 <div class="flex justify-center mb-4">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow-md flex items-center justify-center">
+                    <div class="clickable-logo w-16 h-16 rounded-full bg-gradient-to-tr from-brand-gold to-yellow-200 shadow-md flex items-center justify-center" role="link" tabindex="0" aria-label="Go to home page">
                         <img src="./templates/footer-Logo.png" alt="PCSR Logo" class="w-full h-full object-contain rounded-full" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                         <span style="display:none; text-transform:uppercase; font-weight: bold; color: white; font-size: 20px;">pcsr</span>
                     </div>
                 </div>
-                <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday PCSR Garu</h4>
+                <h4 class="font-serif font-bold text-brand-dark text-lg">Happy Birthday <br>Parvathareddy Chandrasekhar Reddy Garu<br>East Rayalaseema Teacher's MLC<br>YSRCP - Nellore City Incharge</h4>
             </div>
 
             <!-- Credits Section -->
@@ -612,12 +618,13 @@
                     <div class="flex items-center justify-center md:justify-end gap-2 mb-2">
                         <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Initiated by</p>
                     </div>
-                    <a href="https://www.instagram.com/thepcsrtalks?igsh=MXVjZDdzNno5dGg4dw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
-                        PCSR Talks
-                        <i class="fa-solid fa-arrow-up-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    <a href="/" class="clickable-logo text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group" aria-label="Go to home page">
+                       THE PCSR TALKS
+                        <i class="fa-brands fa-instagram text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </a><br>
-                    <a href="" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
+                    <a href="https://wa.me/917097782750?text=Hello%20Dileep" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
                         K V Dileep Kumar
+                        <i class="fa-brands fa-whatsapp text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </a><br>
                     <a href="" target="_blank" rel="noopener noreferrer" class="text-sm font-serif font-bold text-brand-dark hover:text-brand-gold transition-colors inline-flex items-center gap-1 group">
                         E Naveen Kumar
@@ -729,7 +736,7 @@
                 personalize_title: "Add Your Details",
                 live_preview: "Live Preview",
                 label_name: "Your Name",
-                label_message: "Custom Message",
+                label_designation: "Designation",
                 label_color: "Text Color",
                 btn_apply_generate: "Apply & Generate Poster",
                 ready_title: "Success!",
@@ -748,9 +755,10 @@
                 btn_magic: "AI Suggest"
             },
             te: {
+                label_designation: "హోదా",
                 hero_title: "జన్మదిన శుభాకాంక్షలు",
                 hero_subtitle: "పర్వతరెడ్డి చంద్రశేఖర్ రెడ్డి గారు",
-                hero_desc: "మా నాయకుడి జన్మదినాన్ని పురస్కరించుకుని వ్యక్తిగత శుభాకాంక్షల పోస్టర్‌ను సృష్టించండి.",
+                hero_desc: "మన నాయకుడి జన్మదినాన్ని పురస్కరించుకుని వ్యక్తిగత శుభాకాంక్షల పోస్టర్‌ను సృష్టించండి.",
                 btn_create_wishes: "శుభాకాంక్షలు సృష్టించండి",
                 choose_template: "టెంప్లేట్‌ను ఎంచుకోండి",
                 choose_template_desc: "డిజైన్‌ను ఎంచుకుని ప్రారంభించండి.",
@@ -763,7 +771,6 @@
                 personalize_title: "మీ వివరాలను జోడించండి",
                 live_preview: "లైవ్ ప్రివ్యూ",
                 label_name: "మీ పేరు",
-                label_message: "సందేశం",
                 label_color: "అక్షరాల రంగు",
                 btn_apply_generate: "పోస్టర్‌ను రూపొందించండి",
                 ready_title: "విజయం!",
@@ -807,10 +814,6 @@
                 }
             });
 
-            if(state.inputs.message === i18n[lang === 'en' ? 'te' : 'en'].default_msg || state.inputs.message === "") {
-                state.inputs.message = i18n[lang].default_msg;
-                document.getElementById('input-message').value = state.inputs.message;
-            }
             saveState();
             renderPreview();
         }
@@ -824,71 +827,16 @@
             currentView: 'view-landing',
             templateId: 'tpl-1',
             userImageObj: null,
-            inputs: { name: "", message: i18n.en.default_msg, color: "#0f172a", scale: 1 },
+            inputs: { name: "", designation: "", color: "#0f172a", scale: 1 },
             isRendering: false,
             generatedImageBlob: null
         };
 
         const templates = [
-                {
-                id: `tpl-1`,
-                name: `Light Theme`,
-                src: './templates/template1.png',
-                referenceImage: './templates/template1-reference.jpeg',
-                width: 2464,
-                height: 2464,
-                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
-                textConfig: {
-                    name: { size: 110, weight: 'bold' },
-                    message: { size: 64, weight: 'normal', lineHeight: 80 }
-                },
-                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
-            },
-            {
-                id: `tpl-2`,
-                name: `Dark Theme`,
-                src: './templates/template2.png',
-                referenceImage: './templates/template2-reference.jpg',
-                width: 1632,
-                height: 2480,
-                photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
-                textConfig: {
-                    name: { size: 73, weight: 'bold' },
-                    message: { size: 42, weight: 'normal', lineHeight: 54 }
-                },
-                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
-            },
-            {
-                id: `tpl-3`,
-                name: `Dark Theme`,
-                src: './templates/template3.png',
-                referenceImage: './templates/template3-reference.jpg',
-                width: 2400,
-                height: 2400,
-                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
-                textConfig: {
-                    name: { size: 100, weight: 'bold' },
-                    message: { size: 56, weight: 'normal', lineHeight: 70 }
-                },
-                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
-            },
-            {
-                id: `tpl-4`,
-                name: `Dark Theme`,
-                src: './templates/template4.png',
-                referenceImage: './templates/template4-reference.jpg',
-                width: 2400,
-                height: 2400,
-                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
-                textConfig: {
-                    name: { size: 100, weight: 'bold' },
-                    message: { size: 56, weight: 'normal', lineHeight: 70 }
-                },
-                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
-            },
+                
             {
                 id: `tpl-5`,
-                name: `Dark Theme`,
+                name: `Poster 1`,
                 src: './templates/template5.png',
                 referenceImage: './templates/template5-reference.jpg',
                 width: 2400,
@@ -900,9 +848,41 @@
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
+
+            {
+                id: `tpl-8`,
+                name: `Poster 2`,
+                src: './templates/template8.png',
+                referenceImage: './templates/template8-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+
+            {
+                id: `tpl-3`,
+                name: `Poster 3`,
+                src: './templates/template3.png',
+                referenceImage: './templates/template3-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            
+            
             {
                 id: `tpl-6`,
-                name: `Dark Theme`,
+                name: `Poster 4`,
                 src: './templates/template6.png',
                 referenceImage: './templates/template6-reference.jpg',
                 width: 2400,
@@ -916,7 +896,7 @@
             },
             {
                 id: `tpl-7`,
-                name: `Dark Theme`,
+                name: `Poster 5`,
                 src: './templates/template7.png',
                 referenceImage: './templates/template7-reference.jpg',
                 width: 2400,
@@ -925,6 +905,52 @@
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+
+            
+
+            {
+                id: `tpl-4`,
+                name: `Poster 6`,
+                src: './templates/template4.png',
+                referenceImage: './templates/template4-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            
+            {
+                id: `tpl-1`,
+                name: `Poster 7`,
+                src: './templates/template1.png',
+                referenceImage: './templates/template1-reference.jpeg',
+                width: 2464,
+                height: 2464,
+                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { size: 110, weight: 'bold' },
+                    message: { size: 64, weight: 'normal', lineHeight: 80 }
+                },
+                imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
+            },
+            {
+                id: `tpl-2`,
+                name: `Poster 8`,
+                src: './templates/template2.png',
+                referenceImage: './templates/template2-reference.jpg',
+                width: 1632,
+                height: 2480,
+                photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textConfig: {
+                    name: { size: 73, weight: 'bold' },
+                    message: { size: 42, weight: 'normal', lineHeight: 54 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             }
@@ -1107,7 +1133,7 @@
 
             updateCanvasSizes(getTemplate());
 
-            ['name', 'message', 'color', 'scale'].forEach(key => {
+            ['name', 'designation', 'color', 'scale'].forEach(key => {
                 const input = document.getElementById(`input-${key}`);
                 if(input) {
                     input.value = state.inputs[key];
@@ -1115,7 +1141,6 @@
                     input.addEventListener('input', (e) => {
                         state.inputs[key] = key === 'scale' ? parseFloat(e.target.value) : e.target.value;
                         if(key === 'color') els.colorHex.textContent = e.target.value.toUpperCase();
-                        if(key === 'message') document.getElementById('char-count').textContent = `${e.target.value.length}/80`;
                         saveState();
                         clearTimeout(previewDebounceTimer);
                         previewDebounceTimer = setTimeout(renderPreview, 50);
@@ -1123,8 +1148,6 @@
                 }
             });
             
-            document.getElementById('char-count').textContent = `${state.inputs.message.length}/80`;
-
             templates.forEach(tpl => {
                 // Calculate aspect ratio from template dimensions for dynamic sizing
                 const aspectRatio = tpl.width / tpl.height;
@@ -1326,35 +1349,24 @@
             const safeEdgeDistance = Math.min(textX, tpl.width - textX);
             const maxTextWidth = safeEdgeDistance * 2 * 0.9; // 90% of the symmetrical available width
 
-            if(state.inputs.name) {
+            const name = state.inputs.name.trim().toUpperCase();
+            const designation = state.inputs.designation.trim();
+            let nameWasDrawn = false;
+
+            if(name) {
                 ctx.font = `${c.name.weight} ${c.name.size * scale}px Inter`;
-                // Add maxTextWidth constraint to compress exceptionally long names automatically
-                ctx.fillText(state.inputs.name.toUpperCase(), textX, textYStart, maxTextWidth);
+                // The name is optional: omit it instead of distorting it when space is limited.
+                if (ctx.measureText(name).width <= maxTextWidth) {
+                    ctx.fillText(name, textX, textYStart);
+                    nameWasDrawn = true;
+                }
             }
 
-            if(state.inputs.message) {
+            // The custom message is share-only. Posters contain designation (and an optional name).
+            if(designation) {
                 ctx.font = `${c.message.weight} ${c.message.size * scale}px Inter`;
-                const words = state.inputs.message.split(' ');
-                
-                let yPos = state.inputs.name ? textYStart + (c.message.lineHeight * scale * 1.2) : textYStart;
-                
-                let line = '';
-                for(let n = 0; n < words.length; n++) {
-                    let testLine = line + words[n] + ' ';
-                    // Fix: Use line.length > 0 to properly force wrap even when a single word is huge
-                    if (ctx.measureText(testLine).width > maxTextWidth && line.length > 0) {
-                        ctx.fillText(line.trim(), textX, yPos);
-                        line = words[n] + ' ';
-                        yPos += c.message.lineHeight * scale;
-                    } else { 
-                        line = testLine; 
-                    }
-                }
-                
-                // Print the final remaining line
-                if (line.trim().length > 0) {
-                    ctx.fillText(line.trim(), textX, yPos);
-                }
+                const yPos = nameWasDrawn ? textYStart + (c.message.lineHeight * scale * 1.2) : textYStart;
+                ctx.fillText(designation, textX, yPos, maxTextWidth);
             }
         }
 
@@ -1364,6 +1376,12 @@
         }
 
         function generateFinalImage() {
+            if (!state.inputs.designation.trim()) {
+                showToast('Please enter your designation.');
+                document.getElementById('input-designation').focus();
+                return;
+            }
+
             state.isRendering = true;
             const btn = document.getElementById('btn-apply');
             const origHTML = btn.innerHTML;
@@ -1401,13 +1419,37 @@
             });
         }
 
+        function getShareText() {
+            const senderDetails = [state.inputs.name.trim(), state.inputs.designation.trim()]
+                .filter(Boolean)
+                .join('\n');
+
+            return `ప్రియమైన మన వైఎస్సీపీ నెల్లూరు నగర ఇంచార్జ్ మరియు ఎంఎల్సీ
+పర్వత రెడ్డి చంద్ర శేఖర్ రెడ్డి గారికి,
+
+జన్మదిన శుభాకాంక్షలు
+
+ఇట్లు,
+${senderDetails}
+
+మీరు కూడా ఇలా మీ ఫోటో తో విషెస్ చెప్పాలి అనుకుంటే ఈ వెబ్సైట్ లో చేయండి 👇
+https://www.happybirthdaypcsr.com
+
+#HappyBirthdayPCR
+#ParvathaReddyChandraSekharReddy
+#PCRBirthdayWishes
+#YSRCP
+#Nellore
+#MLC`;
+        }
+
         async function nativeShare() {
             if (!navigator.share) return;
             try {
                 const blob = await createExportBlob();
                 if (!blob) return;
                 const file = new File([blob], `pcsr_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
-                const shareData = { title: 'Happy Birthday pcsr Garu', text: state.inputs.message, files: [file] };
+                const shareData = { title: 'Happy Birthday PCSR Garu', text: getShareText(), files: [file] };
                 if (navigator.canShare && !navigator.canShare({ files: [file] })) {
                     delete shareData.files;
                 }
@@ -1427,8 +1469,8 @@
 
            const file = new File([blob], `pcsr_Birthday_Wishes_${Date.now()}.png`, { type: 'image/png' });
                 const shareData = {
-                    title: 'Happy Birthday pcsr Garu',
-                    text: `${state.inputs.message}\n\n🎉 Want to create the same poster? 👉 https://www.happybirthdaypcsr.com`,
+                    title: 'Happy Birthday PCSR Garu',
+                    text: getShareText(),
                     files: [file]
                 };
 
@@ -1447,7 +1489,34 @@
             }, 200);
         }
 
-        window.addEventListener('DOMContentLoaded', init);
+        function openSocialShare(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        function shareOnX() {
+            const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`;
+            openSocialShare(shareUrl);
+        }
+
+        function shareOnFacebook() {
+            const websiteUrl = 'https://www.happybirthdaypcsr.com';
+            const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(websiteUrl)}&quote=${encodeURIComponent(getShareText())}`;
+            openSocialShare(shareUrl);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.clickable-logo').forEach(logo => {
+                const goToHome = () => { window.location.href = '/'; };
+                logo.addEventListener('click', goToHome);
+                logo.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        goToHome();
+                    }
+                });
+            });
+            init();
+        });
     </script>
 </body>
 </html>
