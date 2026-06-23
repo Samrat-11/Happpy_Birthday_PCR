@@ -426,7 +426,7 @@
             <div class="flex-1 flex flex-col">
                 <div class="flex justify-between items-end mb-6">
                     <div>
-                        <h2 class="text-2xl font-serif font-bold" data-i18n="choose_template">Choose a Template</h2>
+                        <h2 class="text-2xl font-serif font-bold" data-i18n="choose_template">Choose a Poster</h2>
                         <p class="text-sm text-slate-500 mt-1" data-i18n="choose_template_desc">Select a design to start personalizing.</p>
                     </div>
                     <span class="text-xs font-bold bg-brand-dark text-white px-3 py-1 rounded-full">8 Options</span>
@@ -537,7 +537,7 @@
                 <div class="mt-8">
                     <button onclick="generateFinalImage()" class="btn-primary" id="btn-apply">
                         <span data-i18n="btn_apply_generate">Apply & Generate Poster</span>
-                        <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
+                        <!-- <i class="fa-solid fa-wand-magic-sparkles ml-2"></i> -->
                     </button>
                 </div>
             </div>
@@ -845,6 +845,7 @@
                 width: 2400,
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 1650, y: 2200, width: 541, height: 177 },
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
@@ -860,6 +861,7 @@
                 width: 2400,
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 1470, y: 2170, width: 541, height: 177 },
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
@@ -875,28 +877,30 @@
                 width: 2400,
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 300, y: 2220, width: 541, height: 177 },
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
-            
             
             {
-                id: `tpl-6`,
+                id: `tpl-1`,
                 name: `Poster 4`,
-                src: './templates/template6.png',
-                referenceImage: './templates/template6-reference.jpg',
-                width: 2400,
-                height: 2400,
-                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                src: './templates/template1.png',
+                referenceImage: './templates/template1-reference.jpeg',
+                width: 2464,
+                height: 2464,
+                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 300, y: 2320, width: 541, height: 177 },
                 textConfig: {
-                    name: { size: 100, weight: 'bold' },
-                    message: { size: 56, weight: 'normal', lineHeight: 70 }
+                    name: { size: 50, weight: 'bold' },
+                    message: { size: 64, weight: 'normal', lineHeight: 80 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
+            
             {
                 id: `tpl-7`,
                 name: `Poster 5`,
@@ -905,6 +909,7 @@
                 width: 2400,
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 1650, y: 2200, width: 541, height: 177 },
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
@@ -922,6 +927,7 @@
                 width: 2400,
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 1440, y: 2220, width: 541, height: 177 },
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
@@ -930,19 +936,21 @@
             },
             
             {
-                id: `tpl-1`,
+                id: `tpl-6`,
                 name: `Poster 7`,
-                src: './templates/template1.png',
-                referenceImage: './templates/template1-reference.jpeg',
-                width: 2464,
-                height: 2464,
-                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                src: './templates/template6.png',
+                referenceImage: './templates/template6-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 300, y: 2220, width: 541, height: 177 },
                 textConfig: {
-                    name: { size: 110, weight: 'bold' },
-                    message: { size: 64, weight: 'normal', lineHeight: 80 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
+
             {
                 id: `tpl-2`,
                 name: `Poster 8`,
@@ -951,6 +959,7 @@
                 width: 1632,
                 height: 2480,
                 photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 180, y: 2120, width: 541, height: 177 },
                 textConfig: {
                     name: { size: 73, weight: 'bold' },
                     message: { size: 42, weight: 'normal', lineHeight: 54 }
@@ -1338,19 +1347,19 @@
             
             ctx.fillStyle = state.inputs.color;
             ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
 
-            let textX = tpl.width / 2;
-            let textYStart = tpl.height * 0.75; // Fallback
-            
-            if (tpl.photoRect) {
-                textX = tpl.photoRect.x + (tpl.photoRect.w / 2); 
-                const gap = tpl.height * 0.04; 
-                textYStart = (tpl.photoRect.y + tpl.photoRect.h) + gap + (c.name.size * scale);
-            }
-
-            // Calculate a safe maximum width based on the center point to strictly prevent edge cutoff
-            const safeEdgeDistance = Math.min(textX, tpl.width - textX);
-            const maxTextWidth = safeEdgeDistance * 2 * 0.9; // 90% of the symmetrical available width
+            const textRect = tpl.textRect || {
+                x: tpl.width * 0.1,
+                y: tpl.height * 0.75,
+                width: tpl.width * 0.8,
+                height: tpl.height * 0.15
+            };
+            const rectWidth = textRect.width || textRect.w;
+            const rectHeight = textRect.height || textRect.h || 0;
+            const textX = textRect.x + (rectWidth / 2);
+            const textYStart = textRect.y;
+            const maxTextWidth = rectWidth;
 
             const name = state.inputs.name.trim().toUpperCase();
             const designation = state.inputs.designation.trim();
@@ -1368,7 +1377,12 @@
             // The custom message is share-only. Posters contain designation (and an optional name).
             if(designation) {
                 ctx.font = `${c.message.weight} ${c.message.size * scale}px Inter`;
-                const yPos = nameWasDrawn ? textYStart + (c.message.lineHeight * scale * 1.2) : textYStart;
+                const nameHeight = c.name.size * scale;
+                const messageHeight = c.message.size * scale;
+                const textGap = rectHeight
+                    ? Math.max(8 * scale, (rectHeight - nameHeight - messageHeight) / 2)
+                    : c.message.lineHeight * scale * 0.35;
+                const yPos = nameWasDrawn ? textYStart + nameHeight + textGap : textYStart;
                 ctx.fillText(designation, textX, yPos, maxTextWidth);
             }
         }
