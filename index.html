@@ -10,7 +10,7 @@
     <!-- ========================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Noto+Serif+Telugu:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- ========================================== -->
     <!--            EXTERNAL LIBRARIES              -->
@@ -886,17 +886,17 @@
             },
             
             {
-                id: `tpl-1`,
+                id: `tpl-4`,
                 name: `Poster 4`,
-                src: './templates/template1.png',
-                referenceImage: './templates/template1-reference.jpeg',
-                width: 2464,
-                height: 2464,
-                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
-                textRect: { x: 300, y: 2320, width: 541, height: 177 },
+                src: './templates/template4.png',
+                referenceImage: './templates/template4-reference.jpg',
+                width: 2400,
+                height: 2400,
+                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 1440, y: 2220, width: 541, height: 177 },
                 textConfig: {
-                    name: { size: 50, weight: 'bold' },
-                    message: { size: 64, weight: 'normal', lineHeight: 80 }
+                    name: { size: 100, weight: 'bold' },
+                    message: { size: 56, weight: 'normal', lineHeight: 70 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
@@ -919,22 +919,22 @@
 
             
 
+            
             {
-                id: `tpl-4`,
+                id: `tpl-1`,
                 name: `Poster 6`,
-                src: './templates/template4.png',
-                referenceImage: './templates/template4-reference.jpg',
-                width: 2400,
-                height: 2400,
-                photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
-                textRect: { x: 1440, y: 2220, width: 541, height: 177 },
+                src: './templates/template1.png',
+                referenceImage: './templates/template1-reference.jpeg',
+                width: 2464,
+                height: 2464,
+                photoRect: { x: 140, y: 1186, w: 844, h: 844, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
+                textRect: { x: 300, y: 2320, width: 541, height: 177 },
                 textConfig: {
-                    name: { size: 100, weight: 'bold' },
-                    message: { size: 56, weight: 'normal', lineHeight: 70 }
+                    name: { size: 60, weight: 'bold' },
+                    message: { size: 64, weight: 'normal', lineHeight: 80 }
                 },
                 imgObj: null, loaded: false, refImageWidth: null, refImageHeight: null
             },
-            
             {
                 id: `tpl-6`,
                 name: `Poster 7`,
@@ -944,6 +944,7 @@
                 height: 2400,
                 photoRect: { x: 200, y: 800, w: 800, h: 800, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textRect: { x: 300, y: 2220, width: 541, height: 177 },
+                skipPosterText: true,
                 textConfig: {
                     name: { size: 100, weight: 'bold' },
                     message: { size: 56, weight: 'normal', lineHeight: 70 }
@@ -960,6 +961,7 @@
                 height: 2480,
                 photoRect: { x: 151.1, y: 831.1, w: 664.7, h: 664.7, shape: 'circle', cropAspect: 1, offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 },
                 textRect: { x: 180, y: 2120, width: 541, height: 177 },
+                skipPosterText: true,
                 textConfig: {
                     name: { size: 73, weight: 'bold' },
                     message: { size: 42, weight: 'normal', lineHeight: 54 }
@@ -1325,6 +1327,28 @@
         }
 
         /** --- CANVAS RENDERING ENGINE --- */
+        function getPosterFont(weight, size) {
+            return `${weight} ${size}px "Playfair Display", "Noto Serif Telugu", Georgia, serif`;
+        }
+
+        function getPosterNameFont(size) {
+            return `italic 700 ${size}px "Playfair Display", "Noto Serif Telugu", Georgia, serif`;
+        }
+
+        function fitFontSize(ctx, text, config, scale, maxWidth) {
+            const targetSize = config.size * scale;
+            const minSize = Math.max(24, targetSize * 0.45);
+            let fittedSize = targetSize;
+
+            while (fittedSize > minSize) {
+                ctx.font = getPosterNameFont(fittedSize);
+                if (ctx.measureText(text).width <= maxWidth) break;
+                fittedSize -= 2;
+            }
+
+            return Math.max(minSize, fittedSize);
+        }
+
         function renderTemplate(ctx) {
             const tpl = getTemplate();
             if(!tpl) return;
@@ -1340,6 +1364,8 @@
             if (tpl.imgObj && tpl.loaded) {
                 ctx.drawImage(tpl.imgObj, 0, 0, tpl.width, tpl.height);
             }
+
+            if (tpl.skipPosterText) return;
 
             // Layer 3: Dynamic Text
             const c = tpl.textConfig;
@@ -1364,20 +1390,20 @@
             const name = state.inputs.name.trim().toUpperCase();
             const designation = state.inputs.designation.trim();
             let nameWasDrawn = false;
+            let drawnNameSize = c.name.size * scale;
 
             if(name) {
-                ctx.font = `${c.name.weight} ${c.name.size * scale}px Inter`;
-                // The name is optional: omit it instead of distorting it when space is limited.
-                if (ctx.measureText(name).width <= maxTextWidth) {
-                    ctx.fillText(name, textX, textYStart);
-                    nameWasDrawn = true;
-                }
+                const fittedNameSize = fitFontSize(ctx, name, c.name, scale, maxTextWidth);
+                ctx.font = getPosterNameFont(fittedNameSize);
+                ctx.fillText(name, textX, textYStart, maxTextWidth);
+                nameWasDrawn = true;
+                drawnNameSize = fittedNameSize;
             }
 
             // The custom message is share-only. Posters contain designation (and an optional name).
             if(designation) {
-                ctx.font = `${c.message.weight} ${c.message.size * scale}px Inter`;
-                const nameHeight = c.name.size * scale;
+                ctx.font = getPosterFont(c.message.weight, c.message.size * scale);
+                const nameHeight = nameWasDrawn ? drawnNameSize : 0;
                 const messageHeight = c.message.size * scale;
                 const textGap = rectHeight
                     ? Math.max(8 * scale, (rectHeight - nameHeight - messageHeight) / 2)
@@ -1393,12 +1419,6 @@
         }
 
         function generateFinalImage() {
-            if (!state.inputs.designation.trim()) {
-                showToast('Please enter your designation.');
-                document.getElementById('input-designation').focus();
-                return;
-            }
-
             state.isRendering = true;
             const btn = document.getElementById('btn-apply');
             const origHTML = btn.innerHTML;
@@ -1452,12 +1472,11 @@ ${senderDetails}
 మీరు కూడా ఇలా మీ ఫోటో తో విషెస్ చెప్పాలి అనుకుంటే ఈ వెబ్సైట్ లో చేయండి 👇
 https://www.happybirthdaypcsr.com
 
-#HappyBirthdayPCR
-#ParvathaReddyChandraSekharReddy
-#PCRBirthdayWishes
-#YSRCP
-#Nellore
-#MLC`;
+
+An Initiative by The PCSR Talks: https://www.instagram.com/thepcsrtalks
+
+#HBDMLCChandrasekharReddy
+#PCSR4NELLORECITY`;
         }
 
         async function nativeShare() {
